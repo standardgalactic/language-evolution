@@ -122,16 +122,67 @@ Meta-experiments testing recoverability and methods.
 
 ### 18. (babel variant - emergence testing)
 
+## Perceptual Control Theory (4) ⭐ NEW FRAMEWORK
+
+Language users control perceptions, not just outputs.
+
+### 19. pct_rigorous.py ⭐ NEW
+- **Type**: Rigorous PCT implementation
+- **Model**: Powers/Calvin control loops
+- **Key Feature**: Signed errors, listener feedback, local sampling
+- **Lines**: ~350
+
+### 20. perceptual_control_language.py ⭐ NEW
+- **Type**: Goal-directed language behavior
+- **Model**: 4 controlled perceptions (comprehension, conformity, effort, distinctiveness)
+- **Key Feature**: Ecological niches shape linguistic adaptation
+- **Lines**: ~380
+
+### 21. ecological_language_dynamics.py ⭐ NEW
+- **Type**: PCT + ecological constraints
+- **Model**: Environmental disturbances, fitness = control success
+- **Key Feature**: Hierarchical control loops
+- **Lines**: ~400
+
+### 22. borrowing_detector.py ⭐ NEW
+- **Type**: Borrowed vs. inherited classification
+- **Model**: Irregular patterns, partial distribution, cultural clustering
+- **Key Feature**: Works with any Observable
+- **Lines**: ~280
+
+## Cross-Modal Framework (2) ⭐ NEW
+
+Unified S → C → B_t → O_t pipeline across modalities.
+
+### 23. language_modality_demo.py ⭐ NEW
+- **Type**: Cross-modal framework validation (language)
+- **Model**: Semantic → Control → Behavior → Observable
+- **Key Feature**: Demonstrates invariant structure
+- **Lines**: ~200
+
+### 24. gesture_modality_demo.py ⭐ NEW
+- **Type**: Cross-modal framework validation (gesture)
+- **Model**: Intention → Motor control → Trajectory → Visible
+- **Key Feature**: Same framework, different modality
+- **Lines**: ~200
+
+### 25. unified_reconstructor_new.py ⭐ NEW
+- **Type**: Unified reconstruction approach
+- **Model**: Combines multiple methods
+- **Key Feature**: Works across history types
+- **Lines**: ~320
+
 ## Total Statistics
 
-- **19 experiments** (was 10 at session start)
-- **~8,100 lines** (was ~3,400)
+- **25 experiments** (was 10 at session start, was 19 mid-session)
+- **~9,500 lines** (was ~3,400)
 - **All categories represented**:
   - History Generators: 7
-  - Inference Systems: 4
+  - Inference Systems: 5
   - Environments: 2
   - Methodology: 5
-  - Cross-cutting: 1 (babel)
+  - Perceptual Control Theory: 4
+  - Cross-Modal Framework: 2
 
 ## Experiments by Research Question
 
