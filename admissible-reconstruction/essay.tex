@@ -1,0 +1,73 @@
+\documentclass[11pt]{book}
+
+% PRIMARY ENGINE: lualatex essay.tex (two passes mandatory for cross-references)
+% FALLBACK ENGINE: xelatex essay.tex (if LuaLaTeX microtype conflict arises)
+%
+% Known LuaLaTeX issue: microtype may conflict with TeX Gyre Pagella under
+% specific font-backend configurations. If LuaLaTeX fails, comment out
+% \usepackage{microtype} in preamble.tex and retry, or use XeLaTeX fallback.
+% Both engines supported via fontspec; no engine-specific features used.
+
+\input{preamble.tex}
+
+\title{\textbf{Structural Invariance Across Modalities}}
+\author{Flyxion \\ \textit{Independent Researcher}}
+\date{}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This essay applies the four theorems proven in the monograph
+\emph{Admissible Reconstruction} to the projection problem: determining
+which structural relations survive when latent intentional states are
+realized through different physical channels. Speech, gesture, music, and
+audio differ in which aspects of structure each modality preserves and
+which it discards, but the formal question remains the same. Does the
+projection preserve admissibility structure completely, as required for
+representational equivalence, or does it introduce distortions? Does the
+projected trajectory maintain nontrivial reachable sets, satisfying the
+coherence condition, or does it degenerate? When observers attempt to
+reconstruct latent structure from observable projections, does the
+observation map produce collisions, and if so, are those collisions
+correctable or structural?
+
+The theorems establish that representation, coherence, repair, and
+reconstruction are not four independent subjects but four aspects of a
+single admissibility relation examined at different points in its
+operation. Representation Invariance determines when physically distinct
+substrates count as semantically equivalent. Admissibility Preservation
+determines when trajectories remain coherent. Monotonic Relaxation
+determines when inadmissibility decreases under repair dynamics.
+Non-Identifiability determines when reconstruction becomes impossible in
+principle, and its diagnostic corollary provides a criterion for
+distinguishing correctable observational errors from fundamental
+structural limits. Together, these results constrain the space of
+possible cross-modal behaviors jointly rather than imposing four
+independent constraints.
+
+\tableofcontents
+
+\mainmatter
+
+\include{chapters/ch06-essay-introduction}
+\include{chapters/ch07-essay-math-foundations}
+\include{chapters/ch08-essay-crossmodal}
+\include{chapters/ch09-essay-pct}
+\include{chapters/ch10-essay-synthesis}
+\include{chapters/ch11-essay-implications}
+\include{chapters/ch12-essay-limits}
+\include{chapters/ch13-essay-objections}
+\include{chapters/ch14-essay-future}
+\include{chapters/ch15-essay-conclusion}
+
+\backmatter
+
+\input{references.tex}
+
+\end{document}

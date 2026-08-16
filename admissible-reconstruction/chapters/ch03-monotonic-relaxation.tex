@@ -1,0 +1,111 @@
+\chapter{Monotonic Relaxation}
+\label{ch:relaxation}
+
+\section{A Terminological Warning}
+
+This chapter's theorem shares a name, and very little else, with
+monotonic continuation as developed elsewhere in this program. The two
+should not be conflated, and the distinction is stated here before the
+theorem itself to prevent exactly that conflation. Monotonic
+continuation is an ordering relation, $S_t \le S_{t+1}$, holding between
+successive states of a trajectory and asserting that later states
+preserve the distinctions from earlier states that remain necessary for
+the reachable continuation; it says nothing about any scalar quantity
+increasing or decreasing. Monotonic relaxation, the subject of this
+chapter, is a claim that a specific scalar functional decreases along a
+specific class of trajectories. The two claims are compatible, and one
+will be shown below to imply a restricted version of the other under an
+additional hypothesis, but they are not restatements of each other and
+a trajectory can satisfy either without satisfying the other.
+
+\section{Statement}
+
+\begin{definition}[Closure functional]
+For a state $X$, define $\closure{X} = -\log \mu(\reach{X})$, where
+$\mu$ is a measure on the state space assigning nonzero mass to any
+nonempty reachable set. $\closure{X}$ is large when few futures remain
+reachable from $X$ and small when many do; it is a scalar measure of
+inadmissibility.
+\end{definition}
+
+\begin{definition}[Repair dynamics]
+A trajectory follows \emph{repair dynamics} if each transition
+$S_i \to S_{i+1}$ is selected, among admissible continuations, to
+increase reachable-set volume: $\mu(\reach{S_{i+1}}) \ge
+\mu(\reach{S_i})$. This is the operational content of repair within this
+program's taxonomy of admissibility-modifying operations: repair is
+the restorative case, distinguished from constitutive and regulatory
+modification precisely by this volume-increasing character.
+\end{definition}
+
+\begin{theorem}[Monotonic Relaxation]
+\label{thm:relaxation}
+If a trajectory $S_0, \dots, S_t$ follows repair dynamics throughout,
+then $\closure{S_i}$ is non-increasing along the trajectory:
+$\closure{S_{i+1}} \le \closure{S_i}$ for every $i < t$.
+\end{theorem}
+
+\begin{proof}
+By definition of repair dynamics, $\mu(\reach{S_{i+1}}) \ge
+\mu(\reach{S_i})$ for every $i < t$. Since $-\log$ is a strictly
+decreasing function on positive reals, $\mu(\reach{S_{i+1}}) \ge
+\mu(\reach{S_i})$ implies $-\log \mu(\reach{S_{i+1}}) \le -\log
+\mu(\reach{S_i})$, that is, $\closure{S_{i+1}} \le \closure{S_i}$.
+\end{proof}
+
+\section{Discussion}
+
+The proof is immediate once repair dynamics are defined as
+volume-increasing, and this is deliberate: the theorem's content is not
+in the inference from the definition, which is a one-line consequence of
+$-\log$ being decreasing, but in the definition itself being the correct
+operational characterization of repair. The definition is not
+stipulated arbitrarily; it is inherited directly from the restorative
+case of this program's modificatory-operation taxonomy, where repair is
+already characterized, independently of this chapter, as the operation
+type that restores lost admissible continuations. Theorem
+\ref{thm:relaxation} shows that once repair is characterized this way,
+monotone decrease of $\closure{\cdot}$ follows automatically; it is not
+an additional empirical claim about repair processes but a restatement
+of what "restoring lost continuations" already meant, now expressed as
+a statement about a scalar functional.
+
+\begin{remark}[Scope of the theorem]
+The hypothesis is essential and is not automatically satisfied by an
+arbitrary admissible trajectory. Constitutive and regulatory
+modifications --- the other two branches of this program's taxonomy of
+operations on admissibility structure --- need not increase
+$\mu(\reach{\cdot})$, and ordinary state evolution under a fixed $R_t$
+can move toward states with strictly smaller reachable sets without
+this constituting any failure of admissibility. A claim of the form
+"inadmissibility always decreases" would be false; Theorem
+\ref{thm:relaxation} is true only of the restorative subclass of
+trajectories, and its scope should be stated with this restriction every
+time it is invoked.
+\end{remark}
+
+\begin{corollary}[Conditional relation to monotonic continuation]
+\label{cor:relaxation-continuation}
+If a trajectory follows repair dynamics and additionally satisfies
+$\reach{S_{i+1}} \supseteq^{*} \reach{S_i}$ in the starred sense used by
+monotonic continuation --- that is, $S_{i+1}$ retains the admissible
+continuations of $S_i$ that remain significant for the reachable
+trajectory, rather than merely having a reachable set of at least equal
+measure --- then the trajectory satisfies both $S_i \le S_{i+1}$ in the
+sense of monotonic continuation and $\closure{S_{i+1}} \le \closure{S_i}$
+in the sense of this chapter. Neither condition implies the other in
+general: a trajectory can increase $\mu(\reach{\cdot})$ while failing to
+retain the specific significant continuations monotonic continuation
+requires, by replacing them with an equal or greater volume of
+differently located reachable states; and a trajectory can satisfy
+monotonic continuation's retention condition while $\mu(\reach{\cdot})$
+decreases, if what is retained is a shrinking but still significant
+core.
+\end{corollary}
+
+Corollary \ref{cor:relaxation-continuation} is the precise statement of
+the relationship gestured at in the opening warning of this chapter.
+The two notions of monotonicity coincide only under an additional
+hypothesis that must be checked independently in any given application,
+and the corollary exists chiefly to prevent the two theorems from being
+cited interchangeably.

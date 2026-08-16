@@ -1,0 +1,119 @@
+\chapter{Non-Identifiability}
+\label{ch:nonidentifiability}
+
+\section{Statement}
+
+The question addressed in this chapter is when it is impossible, not
+merely difficult, to recover which of two histories actually occurred
+from the evidence either would have left behind. The elementary
+direction of this claim is close to definitional; the substantive
+direction is showing that the relevant class of observation maps is
+genuinely, structurally non-injective, rather than merely
+non-injective in unusual or contrived cases.
+
+\begin{definition}[Observation map]
+An observation map is a function $\obsmap : \History \to \Observable$
+from complete histories to observables, where $\Observable$ is whatever
+evidence remains available at a given time to an observer without
+access to $\History$ itself.
+\end{definition}
+
+\begin{theorem}[Non-Identifiability, elementary direction]
+\label{thm:nonident-elementary}
+If $H_1 \neq H_2$ and $\obsmap(H_1) = \obsmap(H_2)$, then no function
+$f : \Observable \to \History$ satisfies $f(\obsmap(H_1)) = H_1$ and
+$f(\obsmap(H_2)) = H_2$ simultaneously.
+\end{theorem}
+
+\begin{proof}
+Suppose such an $f$ existed. Since $\obsmap(H_1) = \obsmap(H_2)$, write
+$o = \obsmap(H_1) = \obsmap(H_2)$. Then $f(o) = f(\obsmap(H_1)) = H_1$
+and also $f(o) = f(\obsmap(H_2)) = H_2$, so $H_1 = H_2$, contradicting
+the hypothesis $H_1 \neq H_2$.
+\end{proof}
+
+This direction is elementary because it is a direct consequence of $f$
+being required to be a function, together with the assumed collision
+$\obsmap(H_1) = \obsmap(H_2)$; no property of admissibility structure is
+needed to prove it. What requires the admissibility apparatus developed
+elsewhere in this program is establishing that such collisions are not
+pathological exceptions confined to contrived cases, but a structural
+feature of the observation maps that actually arise when observation is
+constrained to preserve only reachable-set structure.
+
+\begin{theorem}[Non-Identifiability, structural direction]
+\label{thm:nonident-structural}
+Let $\obsmap$ be any observation map that factors through the
+reachable-set structure --- that is, suppose $\obsmap(H) = \psi(\reach{H})$
+for some function $\psi$, so that $\obsmap$ records only which
+continuations remain admissible from $H$, not $H$ itself. Then whenever
+two histories $H_1 \neq H_2$ satisfy $\reach{H_1} = \reach{H_2}$, it
+follows that $\obsmap(H_1) = \obsmap(H_2)$, and Theorem
+\ref{thm:nonident-elementary} applies. Moreover, this is not a
+degenerate case: $\reach{H_1} = \reach{H_2}$ is precisely the condition
+under which $H_1$ and $H_2$ lie in the same equivalence class of the
+admissibility relation, and any admissibility structure with a
+non-trivial quotient --- that is, any admissibility structure in which
+more than one history maps to the same reachable set --- guarantees the
+existence of such collisions.
+\end{theorem}
+
+\begin{proof}
+The first claim is immediate: if $\reach{H_1} = \reach{H_2}$ then
+$\psi(\reach{H_1}) = \psi(\reach{H_2})$ trivially, since $\psi$ is a
+function of the reachable set alone. For the second claim, recall that
+$R(\cdot)$ partitions the space of histories into equivalence classes by
+definition: two histories lie in the same class exactly when they have
+the same reachable set. An admissibility structure has a trivial
+quotient only when this partition is the discrete partition, that is,
+only when no two distinct histories ever share a reachable set. This is
+not the generic case for admissibility structures of the kind developed
+elsewhere in this program, where reachable sets are typically determined
+by a bounded amount of structure --- the admissible continuations
+consistent with what has been committed so far --- rather than by the
+full, unbounded historical record. Whenever the reachable set is a
+function of bounded information about $H$ while $H$ itself can vary over
+an unbounded space, the pigeonhole principle guarantees histories
+differing in the unrecorded portion while agreeing in the recorded
+portion, hence sharing a reachable set, hence colliding under $\obsmap$.
+\end{proof}
+
+\section{Discussion}
+
+Theorem \ref{thm:nonident-structural} is the precise sense in which
+Non-Identifiability is not a separate result requiring separate
+machinery, but the restorability boundary developed elsewhere in this
+program, proven here as a limitative theorem in its own right rather
+than argued for informally. The restorability boundary has previously
+been discussed in terms of what invariants survive repeated
+reconstruction and what information is irrecoverably lost; Theorem
+\ref{thm:nonident-structural} identifies exactly the mechanism by which
+loss becomes structurally guaranteed rather than merely likely: any
+observation map constrained to record reachable-set structure, applied
+to a space of histories whose reachable sets are determined by less
+information than the histories themselves contain, is non-injective as
+a matter of definition, not as a matter of contingent bad luck in any
+particular case.
+
+\begin{corollary}
+\label{cor:nonident-diagnosis}
+Given an observed collision $\obsmap(H_1) = \obsmap(H_2)$ with
+$H_1 \neq H_2$, the question of \emph{why} reconstruction fails for this
+pair admits a principled decomposition. Either $\reach{H_1} \neq
+\reach{H_2}$, in which case the observation map $\obsmap$ has discarded
+information that a less lossy observation map could in principle have
+retained, and the failure is a failure of the particular observation
+procedure; or $\reach{H_1} = \reach{H_2}$, in which case no observation
+map factoring through reachable-set structure can distinguish $H_1$ from
+$H_2$, and the failure is a failure of recoverability as such, not of
+any particular reconstruction procedure.
+\end{corollary}
+
+Corollary \ref{cor:nonident-diagnosis} gives the precise form of the
+question that motivates this entire research program's treatment of
+reconstruction: whether a given case of reconstruction failure reflects
+an inference that was performed incorrectly, or evidence that has
+structurally ceased to exist. The corollary shows this is not merely a
+useful distinction to draw informally but a genuine dichotomy, decidable
+in principle by checking whether the colliding histories share a
+reachable set.

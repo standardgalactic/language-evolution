@@ -1,0 +1,56 @@
+% preamble.tex
+% Shared preamble for "Admissible Reconstruction"
+% Engine-agnostic via fontspec (compiles under LuaLaTeX or XeLaTeX)
+
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage[margin=1.25in]{geometry}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+% ----- Theorem environments -----
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ----- Notation macros -----
+% Admissibility relation x ~>_R y
+\newcommand{\adm}[1]{\rightsquigarrow_{#1}}
+% Reachable set of a state
+\newcommand{\reach}[1]{R(#1)}
+% Time-indexed admissibility structure
+\newcommand{\Rt}{R_t}
+% Closure functional
+\newcommand{\closure}[1]{C(#1)}
+% Generativity measure
+\newcommand{\genmeas}[1]{G(#1)}
+% Observation map
+\newcommand{\obsmap}{O}
+% History / observable / reconstruction
+\newcommand{\History}{H}
+\newcommand{\Observable}{O_t}
+\newcommand{\Reconstruction}{\hat{H}}
+
+% ----- Section numbering depth -----
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+% ----- No bulleted lists in body prose: enumitem loaded for the rare
+% cases (definitions, notation index) where a list is structurally
+% necessary rather than a substitute for prose. -----

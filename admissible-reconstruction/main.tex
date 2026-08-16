@@ -1,0 +1,101 @@
+\documentclass[11pt]{book}
+
+% PRIMARY ENGINE: lualatex main.tex (two passes mandatory for cross-references)
+% FALLBACK ENGINE: xelatex main.tex (if LuaLaTeX microtype conflict arises)
+%
+% Known LuaLaTeX issue: microtype may conflict with TeX Gyre Pagella under
+% specific font-backend configurations. If LuaLaTeX fails, comment out
+% \usepackage{microtype} in preamble.tex and retry, or use XeLaTeX fallback.
+% Both engines supported via fontspec; no engine-specific features used.
+
+\input{preamble.tex}
+
+\title{\textbf{Admissible Reconstruction}}
+\author{Flyxion \\ \textit{Independent Researcher}}
+\date{}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This monograph isolates and proves four theorems governing when structure
+survives transformation, and when it does not. Each theorem is derived
+directly from the admissibility apparatus developed elsewhere in this
+research program --- the relation $x \adm{R} y$, the reachable set
+$\reach{x}$, the time-indexed admissibility structure $R_t$, and the
+closure functional $\closure{X} = -\log \mu(\reach{X})$ --- rather than
+introduced as free-standing results. \emph{Representation Invariance}
+states that two representations are semantically equivalent whenever
+they induce the same admissibility structure, independent of their
+physical substrate. \emph{Admissibility Preservation} shows that a
+trajectory's coherence is not an independent postulate but a consequence
+of the admissibility relation failing to degenerate: coherence just is
+the nontriviality of $R(S_t)$ maintained across a trajectory.
+\emph{Monotonic Relaxation} identifies the precise, conditional sense in
+which a scalar measure of inadmissibility decreases under repair
+dynamics specifically, and distinguishes this claim carefully from the
+unrelated ordering relation of monotonic continuation. \emph{Non-Identifiability}
+shows that the existence of histories $H_1 \neq H_2$ with
+$\obsmap(H_1) = \obsmap(H_2)$ is not a pathological edge case but a
+structural consequence of any observation map that preserves only
+reachable-set structure rather than full state --- the same fact that
+elsewhere in this program is called the restorability boundary, here
+proven as a limitative theorem in its own right.
+
+Together the four results describe a single underlying architecture:
+representation, coherence, repair, and the limits of recovery are not
+four separate phenomena requiring four separate theories, but four
+faces of one admissibility relation examined at different points in its
+behavior.
+
+\tableofcontents
+
+\chapter*{Notation Index}
+\addcontentsline{toc}{chapter}{Notation Index}
+
+\begin{description}[leftmargin=2.2cm, style=nextline]
+  \item[$x \adm{R} y$] $x$ admissibly continues to $y$ under admissibility
+    structure $R$.
+  \item[$\reach{x}$] the reachable set of $x$: $\{\, y : x \adm{R} y \,\}$.
+  \item[$R_t$] the admissibility structure indexed by time $t$; the
+    static relation $R$ is the frozen special case $R_t \equiv R$.
+  \item[$S_t \le S_{t+1}$] monotonic continuation: $S_{t+1}$ preserves
+    the distinctions of $S_t$ that remain necessary for the reachable
+    trajectory. Ordering, not magnitude.
+  \item[$\closure{X} = -\log \mu(\reach{X})$] the closure functional; a
+    scalar measure of inadmissibility, larger when fewer futures remain
+    reachable from $X$.
+  \item[$\genmeas{X} = \log \mu(\reach{X})$] the generativity measure;
+    $\genmeas{X} = -\closure{X}$.
+  \item[$\History$] a complete history (ground truth), as retained by a
+    simulator or, more generally, as the full state trajectory prior to
+    any lossy observation.
+  \item[$\Observable$] the observable projection of $\History$ available
+    at time $t$; a deliberately lossy map $\obsmap : \History \to
+    \Observable$.
+  \item[$\Reconstruction$] a reconstruction of $\History$ inferred from
+    $\Observable$ alone, without privileged access to $\History$.
+  \item[$\varphi$] an admissibility-isomorphism between two
+    representations: a map such that $x \adm{R} y \iff \varphi(x)
+    \adm{R'} \varphi(y)$.
+\end{description}
+
+\mainmatter
+
+\include{chapters/ch00-introduction}
+\include{chapters/ch01-representation-invariance}
+\include{chapters/ch02-admissibility-preservation}
+\include{chapters/ch03-monotonic-relaxation}
+\include{chapters/ch04-non-identifiability}
+\include{chapters/ch05-conclusion}
+
+\backmatter
+
+\input{references.tex}
+
+\end{document}

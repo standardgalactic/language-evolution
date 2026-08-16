@@ -1,0 +1,98 @@
+\chapter{Admissibility Preservation}
+\label{ch:preservation}
+
+\section{Statement}
+
+The question addressed in this chapter is what it means for a
+trajectory through admissibility structure to remain coherent. The
+answer given here is that coherence is not an additional condition
+imposed on top of admissibility; it is what nontriviality of the
+admissibility relation amounts to when examined along a trajectory
+rather than at a single state.
+
+\begin{definition}[Trajectory]
+A trajectory is a sequence of states $S_0, S_1, \dots, S_t$ such that
+$S_i \adm{R} S_{i+1}$ for each $i < t$, where $R$ may itself vary with
+$i$ if the underlying admissibility structure is time-indexed as $R_i$.
+\end{definition}
+
+\begin{definition}[Degeneracy]
+A trajectory degenerates at step $i$ if $\reach{S_i}$ is empty (no
+continuation is admissible) or a singleton entirely determined by
+$S_0, \dots, S_{i-1}$ (exactly one continuation is admissible, and it
+was already fixed before $S_i$ was reached).
+\end{definition}
+
+\begin{theorem}[Admissibility Preservation]
+\label{thm:preservation}
+A trajectory $S_0, \dots, S_t$ is coherent if and only if it does not
+degenerate at any step $i \le t$; equivalently, if and only if
+$|\reach{S_i}|$ exceeds a nontrivial floor relative to what has already
+been committed by $S_0, \dots, S_{i-1}$, at every step.
+\end{theorem}
+
+\begin{proof}
+Coherence, as the term is used throughout this program, has no content
+apart from the admissibility relation itself: to say a trajectory is
+coherent is to say that at each step, the relation $x \adm{R} y$
+continues to discriminate admissible from inadmissible continuations
+non-vacuously. Suppose the trajectory degenerates at step $i$ because
+$\reach{S_i} = \varnothing$. Then no $y$ satisfies $S_i \adm{R} y$, and
+the relation, restricted to continuations from $S_i$, is uniformly
+false; there is no sense in which the trajectory can be said to continue
+admissibly past $S_i$, coherently or otherwise, since no continuation is
+admissible at all. Suppose instead the trajectory degenerates because
+$\reach{S_i}$ is a singleton already fixed by $S_0, \dots, S_{i-1}$.
+Then the relation restricted to continuations from $S_i$ is uniformly
+true of exactly one candidate and uniformly false of every other; the
+admissibility relation is doing no discriminating work at step $i$, since
+its outcome was determined before $S_i$ was reached, and the statement
+"$S_i \adm{R} S_{i+1}$ is coherent" becomes true independently of
+anything about $S_i$ itself. In either degenerate case, the relation
+$\adm{R}$ fails to be a nontrivial constraint at step $i$: it is either
+vacuously unsatisfiable or vacuously predetermined. Conversely, if
+$\reach{S_i}$ exceeds a nontrivial floor at every step --- if there is
+always more than one admissible continuation not already fixed by the
+trajectory's own history --- then the admissibility relation is doing
+genuine discriminating work at every step, which is what coherence
+consists in. This establishes the biconditional.
+\end{proof}
+
+\section{Discussion}
+
+The proof above is deliberately minimal, and its minimality is the
+point. Coherence has sometimes been treated, informally, as though it
+were an additional property a trajectory could have or lack independent
+of the admissibility relation that generates it --- as though a
+trajectory could be admissible at every step and yet somehow
+incoherent, or coherent despite violating admissibility. Theorem
+\ref{thm:preservation} rules this out: coherence and non-degeneracy of
+the admissibility relation are the same property under two names. This
+matters directly for the definition of monotonic continuation developed
+elsewhere in this program, where the ordering $S_t \le S_{t+1}$
+presupposes, without stating, that $\reach{S_t}$ remains nontrivial;
+Theorem \ref{thm:preservation} supplies the missing lemma that makes
+this presupposition explicit and shows exactly what fails when it does
+not hold.
+
+\begin{corollary}
+\label{cor:preservation-minimum-support}
+Any operational test for coherence --- such as a minimum support ratio
+required of a discourse trajectory before it is judged coherent --- is
+correctly understood as an operational proxy for $|\reach{S_i}|$
+remaining above a nontrivial floor, not as an independent criterion.
+Where such a proxy diverges from the underlying reachable-set condition,
+the proxy, not the theorem, should be revised.
+\end{corollary}
+
+Corollary \ref{cor:preservation-minimum-support} is included because
+domain-specific coherence tests --- support ratios, consistency scores,
+and similar quantities --- are frequently introduced as though they were
+primitive definitions of coherence in their own right. Theorem
+\ref{thm:preservation} reduces the space of legitimate such tests to
+those that track, however indirectly, the nondegeneracy of the
+admissibility relation, and gives a principled way to evaluate a
+proposed test: ask whether it can be false while $\reach{S_i}$ remains
+nontrivial, or true while $\reach{S_i}$ has degenerated. Either case
+indicates the proxy has diverged from what coherence actually
+consists in.

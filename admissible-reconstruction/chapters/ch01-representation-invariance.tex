@@ -1,0 +1,86 @@
+\chapter{Representation Invariance}
+\label{ch:invariance}
+
+\section{Statement}
+
+The question addressed in this chapter is when two representations,
+possibly realized in entirely different substrates, ought to be
+considered the same object. The answer given here is that sameness of
+substrate is irrelevant; what matters is sameness of admissibility
+structure.
+
+\begin{definition}[Admissibility-isomorphism]
+Let $R$ be an admissibility structure on a set $X$ and $R'$ an
+admissibility structure on a set $X'$. A map $\varphi : X \to X'$ is an
+\emph{admissibility-isomorphism} if, for all $x, y \in X$,
+\[
+x \adm{R} y \quad \iff \quad \varphi(x) \adm{R'} \varphi(y).
+\]
+\end{definition}
+
+\begin{theorem}[Representation Invariance]
+\label{thm:invariance}
+If there exists an admissibility-isomorphism $\varphi : X \to X'$
+between $(X, R)$ and $(X', R')$, then $(X, R)$ and $(X', R')$ are
+semantically equivalent, regardless of whatever physical or
+computational substrate realizes $X$ and $X'$.
+\end{theorem}
+
+\section{Discussion}
+
+The theorem as stated is close to definitional, and this is by design
+rather than by accident. Semantic equivalence, within this research
+program, has never been defined as identity of physical encoding; it has
+been defined, throughout the treatment of admissible representation and
+context preservation developed elsewhere in this program, as identity of
+what a representation permits and forbids as continuation. Theorem
+\ref{thm:invariance} simply makes that definition explicit as an
+invariance statement rather than leaving it distributed across the
+apparatus that depends on it.
+
+What is not definitional, and what does real work when the theorem is
+applied, is establishing that a particular $\varphi$ is in fact an
+admissibility-isomorphism between two representations of interest. This
+is generally the harder direction: showing that a biphasic transformation
+--- structured meaning realized as continuous speech, or as sequential
+text, or as embodied gesture --- preserves the reachable-set structure
+exactly, rather than merely preserving some coarser statistic that
+happens to look similar under casual inspection. The content of a
+representation-invariance claim, in any particular application, is
+carried entirely by the verification that $\varphi$ satisfies the
+biconditional in both directions: that admissible continuations in one
+representation correspond exactly to admissible continuations in the
+other, with neither representation admitting a continuation the other
+forbids.
+
+\begin{remark}
+It follows immediately from Theorem \ref{thm:invariance} that
+representation invariance is an equivalence relation on admissibility
+structures: the identity map witnesses reflexivity, the inverse of an
+admissibility-isomorphism is again an admissibility-isomorphism, giving
+symmetry, and composition of admissibility-isomorphisms is again an
+admissibility-isomorphism, giving transitivity. Consequently, the class
+of representations equivalent to a given $(X, R)$ partitions into a
+single equivalence class under $\varphi$, and asking whether two
+representations are "the same" reduces to asking whether they lie in the
+same class.
+\end{remark}
+
+\begin{corollary}
+\label{cor:invariance-substrate}
+No property of $X$ or $X'$ that is not preserved by every
+admissibility-isomorphism can be a semantic property of the
+representation. In particular, substrate-specific properties --- the
+particular physical channel through which a representation is realized,
+its encoding cost, or its production latency --- are not semantic
+properties under this framework unless they happen to be expressible as
+constraints on $R$ itself.
+\end{corollary}
+
+Corollary \ref{cor:invariance-substrate} is worth stating explicitly
+because it draws a sharp boundary that is easy to blur in practice.
+Structural semantics, as developed elsewhere in this program, is
+precisely the study of what survives this partition; anything that does
+not survive it belongs to a different, and legitimate, subject ---
+the study of channel, cost, and implementation --- but not to the study
+of what a representation \emph{means}.
