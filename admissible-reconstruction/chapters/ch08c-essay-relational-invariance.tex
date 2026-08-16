@@ -1,0 +1,52 @@
+\chapter{Relational Invariance and the Family of Preserved Structures}
+\label{ch:essay-relational-invariance}
+
+Theorem~1.1 of \emph{Admissible Reconstruction}, as used throughout this essay, answers a binary question: given two representations, does a single admissibility-isomorphism $\varphi$ relate them, or not. That question presupposes that the full admissibility structure $R$ is the relevant thing to preserve. This chapter generalizes the question by allowing the structure required to survive a transformation to vary, and shows that Theorem~1.1 is recovered as the finest-grained special case of the resulting family rather than displaced by it.
+
+\section{Structure-Relative Equivalence}
+
+\begin{definition}[Structure selector and $\mathcal{S}$-equivalence]
+\label{def:structure-selector}
+A \emph{structure selector} $\mathcal{S}$ is a function assigning to each representation $x$ some structural description $\mathcal{S}(x)$ --- its full admissibility structure, its propositional content, its lexical sequence, its phonetic sequence, or any other well-defined extraction from $x$. Two representations are \emph{$\mathcal{S}$-equivalent}, written $x \sim_{\mathcal{S}} y$, when $\mathcal{S}(x) = \mathcal{S}(y)$.
+\end{definition}
+
+Representation Invariance, as stated in Chapter~1 of \emph{Admissible Reconstruction}, is the special case in which $\mathcal{S}$ extracts the full admissibility structure: $x \sim_{\mathcal{S}} y$ under $\mathcal{S}(x) = (\{z : x \adm{R} z\})$ recovers exactly the condition that $x$ and $y$ share a reachable set under a common admissibility-isomorphism, which is the finest-grained member of the family, since preserving the full admissibility structure is the most demanding requirement a transformation can satisfy. Coarser selectors are obtained by extracting less: a selector that returns only propositional content ignores lexical choice; a selector that returns only lexical sequence ignores phonetic realization; a selector that returns only the character sequence of a written token, discarding typeface, recovers exactly the sense in which changing a font is meaning-preserving.
+
+This makes the font intuition invoked earlier in this essay precise rather than merely evocative. A transformation is \emph{font-like relative to $\mathcal{S}$} when it changes $x$ to some $x'$ with $x \sim_{\mathcal{S}} x'$: the transformation alters what $\mathcal{S}$ discards while leaving what $\mathcal{S}$ retains untouched. Changing typeface is font-like relative to the character-sequence selector. Changing speaker voice is font-like relative to a selector that extracts phonemic sequence but not vocal timbre. Translation from one language to another is font-like relative to a selector that extracts propositional content but not lexical form. No transformation is font-like relative to every selector simultaneously, and no selector is privileged in advance; which $\mathcal{S}$ is the relevant one depends on what question is being asked of the representations.
+
+\section{Invariance Discovery}
+
+The preceding chapters have specified $\mathcal{S}$ in advance and asked whether a given transformation preserves it. The reverse procedure --- given a corpus of realizations related by transformations, discover which structure they share --- is of at least equal practical interest and is developed here as an empirical procedure rather than a further theorem, in keeping with the distinction drawn in Chapter~\ref{ch:essay-implications} between established consequences and testable hypotheses.
+
+Given a corpus $x_1, x_2, \ldots, x_n$ of realizations connected by known transformations --- recordings by different speakers, editions in different fonts, translations into different languages, gestures by different signers --- define, for each pair, the set of structure selectors preserved between them,
+\[
+\mathrm{Preserved}(x_i, x_j) = \{\, \mathcal{S} : \mathcal{S}(x_i) = \mathcal{S}(x_j) \,\},
+\]
+and define the corpus's discovered invariant as the intersection across all pairs,
+\[
+I(X) = \bigcap_{i,j} \mathrm{Preserved}(x_i, x_j).
+\]
+$I(X)$ is the largest set of selectors under which every realization in the corpus is equivalent to every other; equivalently, it identifies the structural description that survives every transformation actually observed in the corpus, rather than the description hypothesized to survive some transformation not yet tested. As the corpus grows to include more speakers, more fonts, more encodings, more languages, and more gestural systems, $I(X)$ can only shrink or stay fixed, never grow, since each additional pair of realizations imposes a further constraint that a selector must survive to remain in the intersection. This gives invariance discovery a definite empirical signature distinct from merely accumulating examples that happen to look similar: a selector belongs to $I(X)$ only if it survives every transformation the corpus has tested, and enlarging the corpus is the only way to test whether a selector that has survived so far continues to survive.
+
+\begin{remark}
+\label{rem:invariance-discovery-limit}
+Invariance discovery does not evade Theorem~4.1 of \emph{Admissible Reconstruction}; it is subject to it. Observing $\mathcal{S}(x_1) = \mathcal{S}(x_2)$ for every $\mathcal{S} \in I(X)$ does not establish $x_1 = x_2$, since $I(X)$ is by construction only the structure that happened to survive the transformations present in the corpus, and two realizations agreeing on every selector in $I(X)$ can still differ on some selector the corpus never tested, or can differ as occurrences in the sense of Chapter~\ref{ch:essay-presentation-identity} while agreeing on every structural selector whatsoever. The audiobook case is again the clearest instance: a single work can have hundreds of performances, all $\mathcal{S}$-equivalent under any selector coarse enough to extract only the work's propositional content, while remaining distinct occurrences, distinct presentations, and in general distinct under any selector fine enough to register performance-level detail.
+\end{remark}
+
+\section{The Generalized Provenance Tuple}
+
+Definition~\ref{def:presentation-identity} in Chapter~\ref{ch:essay-presentation-identity} recorded a token as a triple $(O, \theta, \varepsilon)$: an invariant, a presentation parameter, and an occurrence. The family of selectors developed in this chapter replaces the single invariant $O$ with the discovered set $I(X)$, and the single presentation parameter $\theta$ with an explicit record of which transformation relates a given realization to the others in its corpus. A memory architecture built on this apparatus therefore has reason to retain, for each realization, the five-part record
+\[
+(\text{event}, \text{presentation}, \text{transform}, \text{invariants}, \text{provenance}),
+\]
+where \emph{event} and \emph{provenance} continue to play the role $\varepsilon$ played in Chapter~\ref{ch:essay-presentation-identity}, \emph{presentation} continues to play the role of $\theta$, \emph{transform} records which known transformation, if any, relates this realization to others already in the corpus, and \emph{invariants} records the current $I(X)$ as established by the corpus so far, subject to revision as Remark~\ref{rem:invariance-discovery-limit} requires whenever the corpus grows. Under this record, reprocessing an existing realization --- transcribing the same audio file twelve times, for instance --- adds twelve computational derivations under a single, unchanged \emph{event} and \emph{provenance}, while twelve independent readings of the same passage add twelve distinct events whose \emph{invariants} field may nonetheless coincide. The distinction Proposition~\ref{prop:presentation-collision} showed a provenance-blind observation map cannot recover is exactly the distinction this five-part record is built to retain.
+
+\section{A Relational Worked Example}
+
+The apparatus developed so far in this chapter treats structural equivalence as a matter of which extracted description survives a transformation. The clearest demonstration that this need not involve any surface resemblance between the two sides of a transformation comes from a spatial, non-visual interface design in which files are rendered as sounds: a filesystem object occupies a position in a relational structure --- proximity to other objects, urgency, frequency of use --- and that relational position is realized through an arbitrary sensory channel, such as a bird call whose species, distance, and volume encode which object it is, how far the listener currently is from engaging with it, and how much attention it currently warrants.
+
+Under Definition~\ref{def:structure-selector}, the bird call is not the object any more than a particular typeface is the sentence it renders; it is a realization of whichever relational structure a given selector $\mathcal{S}$ extracts. The strongest instance of this is not a file rendered as a sound in a way that resembles the file, since files have no intrinsic sound, but a task's approaching deadline rendered as an approaching train. The train and the deadline share no sensory property whatsoever --- one is acoustic and spatial, the other temporal and abstract --- and yet a selector that extracts only the relational structure of decreasing distance to a boundary is preserved exactly:
+\[
+d(\text{task}, \text{deadline}) \downarrow \quad \longleftrightarrow \quad d(\text{listener}, \text{train}) \downarrow.
+\]
+Both sides of this correspondence instantiate the same coarse selector, an approach-to-boundary relation, while differing on every finer selector that would register sensory modality, physical medium, or literal content. This is the sharpest available illustration of the chapter's central claim: cross-modal equivalence, in the sense this research program has been developing, requires preservation of the relevant relational structure under some selector $\mathcal{S}$, and requires nothing whatsoever by way of resemblance between the domains the selector is applied to.

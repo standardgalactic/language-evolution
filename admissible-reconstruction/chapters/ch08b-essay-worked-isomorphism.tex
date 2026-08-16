@@ -1,0 +1,42 @@
+\chapter{A Worked Admissibility-Isomorphism}
+\label{ch:essay-worked-isomorphism}
+
+Chapter~\ref{ch:essay-crossmodal} worked the speech/gesture request example far enough to state what proving representational equivalence would require, then stopped short of constructing $\varphi$, on the grounds that natural language and natural gesture are unbounded systems whose full admissibility structure is not something either side of this essay can specify exhaustively. That limitation is real and is not lifted here. What can be done, without pretending otherwise, is to construct and verify $\varphi$ exactly on a finite reduction of the example: a five-state model of each modality, small enough that the biconditional required by the admissibility-isomorphism definition of Chapter~1 in \emph{Admissible Reconstruction} can be checked exhaustively rather than argued informally. This upgrades the request example from illustrative to proven, at the resolution the reduction operates at, and the chapter closes by stating precisely what that qualification costs.
+
+\section{The Finite Reduction}
+
+Let the speech state space be $X = \{x_0, x_{1a}, x_{1b}, x_{1c}, x_2\}$, where $x_0$ is the null state prior to any utterance, $x_{1a}$ is the canonical realization ``give me the book,'' $x_{1b}$ is the lexical variant ``hand me the book,'' $x_{1c}$ is the pronominal variant ``give it to me,'' and $x_2$ is the terminal state in which the request has been complied with. Let the admissibility relation $R$ on $X$ consist of exactly the pairs
+\[
+x_0 \adm{R} x_{1a}, \quad x_0 \adm{R} x_{1b}, \quad x_0 \adm{R} x_{1c}, \quad x_{1a} \adm{R} x_2, \quad x_{1b} \adm{R} x_2, \quad x_{1c} \adm{R} x_2,
+\]
+and no others. In particular $x_0 \not\adm{R} x_2$: the model does not admit reaching compliance without an intervening realization of the request, which keeps $R$ a genuine constraint rather than a relation that admits everything.
+
+Let the gesture state space be $X' = \{y_0, y_{1a}, y_{1b}, y_{1c}, y_2\}$, where $y_0$ is hands at rest, $y_{1a}$ is the canonical gestural sequence (point toward self, grasping motion, point toward object), $y_{1b}$ is the emphatic variant (the same sequence with an added upward palm orientation), $y_{1c}$ is the reordered variant (point toward object, point toward self, grasping motion), and $y_2$ is the terminal state in which the addressee has handed over the object. Let $R'$ on $X'$ consist of exactly
+\[
+y_0 \adm{R'} y_{1a}, \quad y_0 \adm{R'} y_{1b}, \quad y_0 \adm{R'} y_{1c}, \quad y_{1a} \adm{R'} y_2, \quad y_{1b} \adm{R'} y_2, \quad y_{1c} \adm{R'} y_2,
+\]
+with $y_0 \not\adm{R'} y_2$ imposed for the same reason.
+
+\section{Verification}
+
+\begin{proposition}
+\label{prop:worked-iso}
+The map $\varphi : X \to X'$ defined by $\varphi(x_0) = y_0$, $\varphi(x_{1a}) = y_{1a}$, $\varphi(x_{1b}) = y_{1b}$, $\varphi(x_{1c}) = y_{1c}$, $\varphi(x_2) = y_2$ is an admissibility-isomorphism between $(X, R)$ and $(X', R')$.
+\end{proposition}
+
+\begin{proof}
+$\varphi$ is a bijection by construction. Since $X$ is finite, the biconditional $x \adm{R} x'' \iff \varphi(x) \adm{R'} \varphi(x'')$ can be checked on all $5 \times 5 = 25$ ordered pairs; it suffices to check the six pairs in $R$, the six corresponding image pairs in $R'$, and confirm no unintended collisions arise among the remaining nineteen. For each of the six pairs constituting $R$, the image under $\varphi$ is, by direct substitution, one of the six pairs constituting $R'$: $\varphi(x_0, x_{1a}) = (y_0, y_{1a}) \in R'$, and identically for the remaining five. Conversely, each of the six pairs constituting $R'$ has $\varphi^{-1}$ equal to a pair in $R$, by the same substitution run in reverse, since $\varphi$ is a bijection and its inverse is given explicitly by the labeling. For every pair not in $R$ --- including $(x_0, x_2)$, every pair with $x_2$ or $y_2$ as first coordinate, and every pair relating two states with the same first subscript, such as $(x_{1a}, x_{1b})$ --- the image pair is, by the same direct substitution, not in $R'$, since $R'$ was defined to contain exactly the six images of the six pairs in $R$ and no others. The biconditional therefore holds on all twenty-five pairs, exhaustively.
+\end{proof}
+
+\begin{corollary}
+\label{cor:worked-invariance}
+By Theorem~1.1 of \emph{Admissible Reconstruction}, $(X, R)$ and $(X', R')$ are semantically equivalent. By Corollary~1.2 of the same chapter, any property distinguishing speech from gesture that is not preserved by $\varphi$ --- acoustic versus motor production channel, articulatory cost, production latency, or the physical medium through which the signal propagates --- is not a semantic property of the request represented by $(X, R)$, but a property of implementation.
+\end{corollary}
+
+\section{What the Reduction Costs}
+
+Proposition~\ref{prop:worked-iso} is a genuine proof, not an illustration, but it is a proof about a five-state reduction, and the honesty of the result depends on being explicit about what the reduction discarded to become finite. Three lexical variants and one gestural ordering variant were chosen as representative classes standing in for what are, in unrestricted speech and gesture, unbounded continua: indefinitely many paraphrases of the request (``could you pass me the book,'' ``I'd like the book, please,'' ``the book, if you would''), indefinitely many gestural realizations varying in speed, amplitude, and handedness, and additional terminal outcomes beyond simple compliance, such as partial compliance, clarification requests, or refusal.
+
+This reduction is itself an observation map in the sense of Chapter~4 of \emph{Admissible Reconstruction}: a function $\psi$ from the unbounded space of actual utterances and gestures onto the five-element state spaces $X$ and $X'$. Theorem~4.2 of that chapter applies directly to $\psi$. Because the space of actual realizations is unbounded while $X$ has only five elements, the pigeonhole principle guarantees that $\psi$ collapses many distinct actual utterances onto the same state $x_{1a}$, $x_{1b}$, or $x_{1c}$, and correspondingly for gesture. Proposition~\ref{prop:worked-iso} therefore establishes representational equivalence at the resolution $\psi$ operates at; it does not and cannot, without further work, establish that the unbounded speech and gesture systems themselves are admissibility-isomorphic, since that would require exhibiting a $\varphi$ defined on the full, unreduced state spaces and verifying the biconditional on an infinite relation, which the method of exhaustive case-checking used here cannot do.
+
+What the worked example changes is the status of the claim, not its scope. Chapter~\ref{ch:essay-crossmodal} could previously say only that the two realizations \emph{might} be representationally invariant, pending construction of $\varphi$. It can now say that a specific, explicit reduction of the two realizations \emph{is} representationally invariant, proven by exhaustive verification, and that extending the result to the unreduced systems is an open problem of the same kind that Chapter~\ref{ch:essay-crossmodal} already identified: constructing projectors and inverse engines for each modality and testing, rather than stipulating, whether the reduction used here discards information that matters to admissibility or only information that varies freely beneath it.
