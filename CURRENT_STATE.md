@@ -2,15 +2,63 @@
 
 **Date**: 2026-08-15  
 **Version**: 0.1.0  
-**Status**: Production-Ready Experimental Laboratory
+**Status**: Production-Ready Experimental Laboratory with Perceptual Control Theory
 
 ## Quick Stats
 
-- **10 working experiments**
-- **~4,300 lines of Python**  
-- **11/11 tests passing**
+- **22 working experiments** (up from 18)
+- **~7,000 lines of Python** (up from ~5,600)
+- **12/12 tests passing**
+- **Zero linting errors** (485 fixed this session)
 - **Complete vertical slice validated**
 - **First-class recoverability analysis**
+- **NEW: Perceptual Control Theory implementation**
+
+## Latest Addition: Perceptual Control Theory (August 15, 2026)
+
+### New Theoretical Framework
+
+Based on William Powers and William Calvin's work, added **Perceptual Control Theory** (PCT) to language evolution:
+
+**Core Insight**: Language users don't just "respond to stimuli"—they actively **control their perceptions** through negative feedback loops.
+
+```
+Reference (goal) → Error (r - p) → Output → Environment → Perception
+                                                               ↑
+                                                               |
+                                                         (feedback)
+```
+
+### New Experiments (4)
+
+1. **Borrowing Detector** (`borrowing_detector.py`)
+   - Distinguishes borrowed vs. inherited vocabulary
+   - Uses irregular patterns, partial distribution, cultural clustering
+   - Works with any Observable
+
+2. **Perceptual Control Language** (`perceptual_control_language.py`)
+   - Agents control perceptions (comprehension, conformity, effort, distinctiveness)
+   - Different ecological niches create different control problems
+   - Demonstrates environment-language adaptation
+
+3. **Ecological Language Dynamics** (`ecological_language_dynamics.py`)
+   - PCT + ecological constraints
+   - Environmental disturbances (migration, contact, innovation)
+   - Fitness = perceptual control success
+
+4. **PCT Rigorous** (`pct_rigorous.py`)
+   - Signed error signals (directional)
+   - Environment causally affects perception
+   - Local sampling (no global knowledge)
+   - Listener-based comprehension feedback
+   - Separate independent controllers
+
+### Unique Contributions
+
+- **First goal-directed model**: Agents have control targets, not just responses
+- **First fitness-based model**: Success = achieving perceptual control
+- **First ecological niche model**: Environment shapes linguistic adaptation
+- **First hierarchical control framework**: Nested control loops
 
 ## Major Achievements
 
