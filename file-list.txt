@@ -1,0 +1,148 @@
+.
+├── ACKNOWLEDGEMENTS.md
+├── AUTHORS.md
+├── CHANGELOG.md
+├── CITATION.cff
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── CURRENT_STATE.md
+├── EXPERIMENTS_CATALOG.md
+├── IMPLEMENTATION_SUMMARY.md
+├── LICENSE
+├── Makefile
+├── README.md
+├── ROADMAP.md
+├── SECURITY.md
+├── SESSION_FINAL_TRANSFORMATION.md
+├── SESSION_SUMMARY.md
+├── SESSION_SUMMARY_AUG15.md
+├── SESSION_SUMMARY_PCT.md
+├── STATUS.md
+├── STYLE.md
+├── admissible-reconstruction
+│   ├── COMPILE.md
+│   ├── INSTALL.md
+│   ├── chapters
+│   │   ├── ch00-introduction.aux
+│   │   ├── ch00-introduction.tex
+│   │   ├── ch01-representation-invariance.aux
+│   │   ├── ch01-representation-invariance.tex
+│   │   ├── ch02-admissibility-preservation.aux
+│   │   ├── ch02-admissibility-preservation.tex
+│   │   ├── ch03-monotonic-relaxation.aux
+│   │   ├── ch03-monotonic-relaxation.tex
+│   │   ├── ch04-non-identifiability.aux
+│   │   ├── ch04-non-identifiability.tex
+│   │   ├── ch05-conclusion.aux
+│   │   ├── ch05-conclusion.tex
+│   │   ├── ch06-essay-introduction.tex
+│   │   ├── ch07-essay-math-foundations.tex
+│   │   ├── ch08-essay-crossmodal.tex
+│   │   ├── ch08b-essay-worked-isomorphism.tex
+│   │   ├── ch08c-essay-relational-invariance.tex
+│   │   ├── ch09-essay-pct.tex
+│   │   ├── ch10-essay-synthesis.tex
+│   │   ├── ch11-essay-implications.tex
+│   │   ├── ch11b-essay-presentation-identity.tex
+│   │   ├── ch12-essay-limits.tex
+│   │   ├── ch13-essay-objections.tex
+│   │   ├── ch14-essay-future.tex
+│   │   └── ch15-essay-conclusion.tex
+│   ├── essay.pdf
+│   ├── essay.tex
+│   ├── main.aux
+│   ├── main.log
+│   ├── main.out
+│   ├── main.pdf
+│   ├── main.tex
+│   ├── main.toc
+│   ├── preamble.tex
+│   └── references.tex
+├── benchmarks
+├── docs
+│   ├── architecture.md
+│   ├── bibliography.md
+│   ├── comparative_recoverability.md
+│   ├── cross_experiment_reconstruction.md
+│   ├── dialect_continuum_analysis.md
+│   ├── essay_guide.md
+│   ├── language_earth_critical_analysis.md
+│   ├── last_similar_thing.md
+│   ├── lexical_selection.md
+│   ├── mathematical_formalization_summary.md
+│   ├── perceptual_control_experiments.md
+│   ├── progress_update_2.md
+│   ├── recoverability.md
+│   ├── roadmap.md
+│   ├── systematic_reconstruction.md
+│   ├── theoretical_connections.md
+│   ├── unified_reconstructor.md
+│   ├── unified_structural_framework.md
+│   └── vertical_slice_phonological.md
+├── experiments
+│   ├── __pycache__
+│   │   ├── cross_experiment_reconstruction.cpython-312.pyc
+│   │   ├── language_earth.cpython-312.pyc
+│   │   ├── phonological_drift.cpython-312.pyc
+│   │   ├── reconstruction_adapter.cpython-312.pyc
+│   │   ├── recoverability_metrics.cpython-312.pyc
+│   │   └── systematic_reconstruction.cpython-312.pyc
+│   ├── ablation_study.py
+│   ├── babel.py
+│   ├── borrowing.py
+│   ├── borrowing_detector.py
+│   ├── comparative_recoverability.py
+│   ├── cross_experiment_reconstruction.py
+│   ├── dialect_continuum.py
+│   ├── ecological_language_dynamics.py
+│   ├── false_cognates.py
+│   ├── gesture_modality_demo.py
+│   ├── glyph_evolution.py
+│   ├── language_earth.py
+│   ├── language_earth_reconstruction_test.py
+│   ├── language_modality_demo.py
+│   ├── last_similar_thing.py
+│   ├── lexical_selection.py
+│   ├── minimum_language.py
+│   ├── pct_rigorous.py
+│   ├── perceptual_control_language.py
+│   ├── phonological_drift.py
+│   ├── phonological_reconstruction.py
+│   ├── reconstruct.py
+│   ├── reconstruction_adapter.py
+│   ├── recoverability.py
+│   ├── recoverability_metrics.py
+│   ├── recoverability_stress_test.py
+│   ├── semantic_drift.py
+│   ├── simple_tree_builder.py
+│   ├── systematic_reconstruction.py
+│   └── unified_reconstructor_new.py
+├── file-list.txt
+├── notebooks
+│   └── README.md
+├── papers
+├── pyproject.toml
+├── site
+│   └── index.md
+├── src
+│   └── language_evolution
+│       ├── __init__.py
+│       ├── __pycache__
+│       │   ├── __init__.cpython-312.pyc
+│       │   ├── framework.cpython-312.pyc
+│       │   ├── phonology.cpython-312.pyc
+│       │   ├── semantics.cpython-312.pyc
+│       │   └── unified_framework.cpython-312.pyc
+│       ├── framework.py
+│       ├── phonology.py
+│       ├── semantics.py
+│       ├── theorems.py
+│       └── unified_framework.py
+└── tests
+    ├── __pycache__
+    │   ├── test_framework.cpython-312-pytest-9.1.1.pyc
+    │   └── test_smoke.cpython-312-pytest-9.1.1.pyc
+    ├── test_framework.py
+    └── test_smoke.py
+
+15 directories, 131 files
