@@ -5,12 +5,11 @@ operations) and let agents invent constructions only when existing expressions c
 efficiently distinguish intended meanings.
 """
 
-from dataclasses import dataclass, field
-from typing import List, Dict, Set, Tuple, Optional
 import random
-from collections import defaultdict
-
 import sys
+from collections import defaultdict
+from dataclasses import dataclass, field
+
 sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
 
 
@@ -18,8 +17,8 @@ sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
 class Meaning:
     """A meaning to be expressed."""
     concept: str
-    arguments: Tuple[str, ...] = field(default_factory=tuple)
-    modifiers: Dict[str, str] = field(default_factory=dict)
+    arguments: tuple[str, ...] = field(default_factory=tuple)
+    modifiers: dict[str, str] = field(default_factory=dict)
     
     def __hash__(self):
         return hash((self.concept, self.arguments, tuple(sorted(self.modifiers.items()))))
@@ -39,7 +38,7 @@ class Meaning:
 @dataclass
 class Expression:
     """A linguistic expression."""
-    symbols: Tuple[str, ...]
+    symbols: tuple[str, ...]
     
     def __hash__(self):
         return hash(self.symbols)
@@ -67,7 +66,7 @@ class Construction:
         # Simplified check - in reality would pattern-match
         return True
     
-    def build(self, meaning: Meaning, lexicon: 'Lexicon') -> Optional[Expression]:
+    def build(self, meaning: Meaning, lexicon: 'Lexicon') -> Expression | None:
         """Build an expression for a meaning."""
         try:
             return self.expression_builder(meaning, lexicon)
@@ -80,16 +79,16 @@ class Lexicon:
     
     def __init__(self):
         # Core roots
-        self.roots: Dict[str, str] = {}
+        self.roots: dict[str, str] = {}
         
         # Meaning to expression mappings
-        self.expressions: Dict[Meaning, Set[Expression]] = defaultdict(set)
+        self.expressions: dict[Meaning, set[Expression]] = defaultdict(set)
         
         # Available constructions
-        self.constructions: List[Construction] = []
+        self.constructions: list[Construction] = []
         
         # Usage statistics
-        self.usage_count: Dict[Expression, int] = defaultdict(int)
+        self.usage_count: dict[Expression, int] = defaultdict(int)
     
     def add_root(self, concept: str, symbol: str):
         """Add a root morpheme."""
@@ -101,7 +100,7 @@ class Lexicon:
         """Add a grammatical construction."""
         self.constructions.append(construction)
     
-    def express(self, meaning: Meaning) -> Optional[Expression]:
+    def express(self, meaning: Meaning) -> Expression | None:
         """Find the best expression for a meaning."""
         # First check if we have a direct expression
         if meaning in self.expressions:
@@ -135,14 +134,14 @@ class Agent:
     id: int
     lexicon: Lexicon
     
-    def communicate(self, meaning: Meaning) -> Optional[Expression]:
+    def communicate(self, meaning: Meaning) -> Expression | None:
         """Try to express a meaning."""
         expr = self.lexicon.express(meaning)
         if expr:
             self.lexicon.record_usage(expr)
         return expr
     
-    def understand(self, expression: Expression, possible_meanings: Set[Meaning]) -> Optional[Meaning]:
+    def understand(self, expression: Expression, possible_meanings: set[Meaning]) -> Meaning | None:
         """Try to understand an expression given context."""
         # Find meanings that could match this expression
         candidates = set()
@@ -175,7 +174,7 @@ def create_minimal_lexicon() -> Lexicon:
     lex.add_root('that', 'ta')
     
     # Simple juxtaposition (the only initial construction)
-    def juxtapose(meaning: Meaning, lexicon: Lexicon) -> Optional[Expression]:
+    def juxtapose(meaning: Meaning, lexicon: Lexicon) -> Expression | None:
         """Simple juxtaposition of roots."""
         if meaning.concept in lexicon.roots and meaning.arguments:
             symbols = [lexicon.roots[meaning.concept]]
@@ -194,8 +193,8 @@ def create_minimal_lexicon() -> Lexicon:
 
 def invent_construction(
     lexicon: Lexicon,
-    ambiguous_pairs: List[Tuple[Meaning, Meaning]]
-) -> Optional[Construction]:
+    ambiguous_pairs: list[tuple[Meaning, Meaning]]
+) -> Construction | None:
     """Invent a new construction to distinguish ambiguous meanings."""
     
     # Analyze what distinctions are needed
@@ -206,17 +205,14 @@ def invent_construction(
     
     # Count what kinds of distinctions we need
     needs_agent_marker = False
-    needs_patient_marker = False
-    needs_modifier = False
     
     for m1, m2 in ambiguous_pairs:
-        if m1.concept == m2.concept:
-            if m1.arguments != m2.arguments:
-                needs_agent_marker = True
+        if m1.concept == m2.concept and m1.arguments != m2.arguments:
+            needs_agent_marker = True
     
     # Invent agent-marking construction
     if needs_agent_marker and len(lexicon.roots) > 0:
-        def mark_agent(meaning: Meaning, lexicon: Lexicon) -> Optional[Expression]:
+        def mark_agent(meaning: Meaning, lexicon: Lexicon) -> Expression | None:
             if meaning.arguments and len(meaning.arguments) >= 1:
                 # Add 'ga' marker after agent
                 agent = meaning.arguments[0]
@@ -284,13 +280,13 @@ def run_simulation(communication_rounds: int = 100, ambiguity_threshold: int = 3
             for expr, pairs in ambiguities.items():
                 if len(pairs) >= ambiguity_threshold:
                     print(f"\nRound {round_num}: Expression '{expr}' is ambiguous ({len(pairs)} pairs)")
-                    print(f"  Inventing construction to distinguish meanings...")
+                    print("  Inventing construction to distinguish meanings...")
                     
                     construction = invent_construction(lexicon, pairs)
                     if construction:
                         lexicon.add_construction(construction)
                         print(f"  Added construction: {construction.name}")
-                        ambiguities[expr].clear()  # Reset after invention
+                        pairs.clear()  # Reset after invention
     
     print(f"\n=== After {communication_rounds} Communication Rounds ===\n")
     print(f"Final constructions: {len(lexicon.constructions)}")
@@ -301,7 +297,7 @@ def run_simulation(communication_rounds: int = 100, ambiguity_threshold: int = 3
     print(f"Unique expressions learned: {len(lexicon.expressions)}")
     
     # Show example expressions
-    print(f"\nExample expressions:")
+    print("\nExample expressions:")
     for meaning in meanings[:5]:
         expr = lexicon.express(meaning)
         if expr:
@@ -310,7 +306,7 @@ def run_simulation(communication_rounds: int = 100, ambiguity_threshold: int = 3
     
     # Show most frequent expressions
     if lexicon.usage_count:
-        print(f"\nMost frequent expressions:")
+        print("\nMost frequent expressions:")
         top_exprs = sorted(lexicon.usage_count.items(), key=lambda x: -x[1])[:5]
         for expr, count in top_exprs:
             print(f"  '{expr}': {count} uses")

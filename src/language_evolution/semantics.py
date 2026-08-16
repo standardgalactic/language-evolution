@@ -1,15 +1,14 @@
 """Semantic representations for meaning evolution."""
 
-from dataclasses import dataclass
-from typing import Set, Dict, List, Tuple
 import math
 import random
+from dataclasses import dataclass
 
 
 @dataclass
 class SemanticVector:
     """A point in semantic space representing word meaning."""
-    dimensions: Tuple[float, ...]  # Coordinates in semantic space
+    dimensions: tuple[float, ...]  # Coordinates in semantic space
     
     def distance_to(self, other: 'SemanticVector') -> float:
         """Euclidean distance to another vector."""
@@ -78,7 +77,7 @@ class SemanticSpace:
     
     def __init__(self, dimensions: int = 3):
         self.dimensions = dimensions
-        self.regions: Dict[str, SemanticRegion] = {}
+        self.regions: dict[str, SemanticRegion] = {}
     
     def add_region(self, word_id: str, center: SemanticVector, radius: float, label: str):
         """Add a semantic region for a word."""
@@ -88,7 +87,7 @@ class SemanticSpace:
         """Get the semantic region for a word."""
         return self.regions[word_id]
     
-    def find_overlapping(self, word_id: str, threshold: float = 0.3) -> List[Tuple[str, float]]:
+    def find_overlapping(self, word_id: str, threshold: float = 0.3) -> list[tuple[str, float]]:
         """Find words whose regions overlap with the given word."""
         region = self.regions[word_id]
         overlaps = []
@@ -103,7 +102,7 @@ class SemanticSpace:
         
         return sorted(overlaps, key=lambda x: -x[1])
     
-    def get_nearest_words(self, point: SemanticVector, max_words: int = 5) -> List[Tuple[str, float]]:
+    def get_nearest_words(self, point: SemanticVector, max_words: int = 5) -> list[tuple[str, float]]:
         """Find words whose regions are nearest to a point."""
         distances = [
             (word_id, region.center.distance_to(point))
@@ -241,7 +240,7 @@ if __name__ == '__main__':
     print(f"  After:  {new_stone}")
     
     new_overlaps = space.find_overlapping('stone', threshold=0.1)
-    print(f"\n  New overlaps:")
+    print("\n  New overlaps:")
     for other_id, overlap in new_overlaps:
         print(f"    ↔ {other_id} (overlap={overlap:.2f})")
     

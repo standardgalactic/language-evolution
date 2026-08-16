@@ -5,21 +5,19 @@ distinctions remain observable vs become genuinely unrecoverable.
 """
 
 import sys
+
 sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
 
-from language_evolution.framework import (
-    History, Observable, HistoryGenerator, compare_histories,
-    measure_observable_distance, RecoverabilityAnalysis
-)
-from language_evolution.phonology import Phoneme, SoundChange, create_basic_inventory
-from typing import Dict, List
 import random
+
+from language_evolution.framework import HistoryGenerator, Observable, measure_observable_distance
+from language_evolution.phonology import Phoneme, SoundChange, create_basic_inventory
 
 
 class SimplePhonologicalGenerator(HistoryGenerator):
     """Simplified phonological evolution for recoverability testing."""
     
-    def __init__(self, seed: int = None):
+    def __init__(self, seed: int | None = None):
         super().__init__()
         if seed is not None:
             random.seed(seed)
@@ -30,7 +28,7 @@ class SimplePhonologicalGenerator(HistoryGenerator):
             'word2': [self.inventory.get_phoneme(s) for s in 'mater'],
             'word3': [self.inventory.get_phoneme(s) for s in 'tres'],
         }
-        self.applied_changes: List[SoundChange] = []
+        self.applied_changes: list[SoundChange] = []
     
     def step(self, time: int):
         """Apply random sound changes."""
@@ -56,7 +54,7 @@ class SimplePhonologicalGenerator(HistoryGenerator):
                     }
                 )
     
-    def _get_possible_changes(self) -> List[SoundChange]:
+    def _get_possible_changes(self) -> list[SoundChange]:
         """Get possible sound changes."""
         inv = self.inventory
         changes = []
@@ -110,7 +108,7 @@ def run_recoverability_experiment():
         observables.append(observable)
         print(f"  History {i}: {len(history)} events → {observable.languages[0]}")
     
-    print(f"\n=== Measuring Observational Distance ===\n")
+    print("\n=== Measuring Observational Distance ===\n")
     
     # Find pairs with similar observables but different histories
     indistinguishable = []
@@ -136,14 +134,14 @@ def run_recoverability_experiment():
                 print(f"  Observable distance: {distance:.3f}")
                 print(f"  History {i}: {len(h1.events)} events")
                 print(f"  History {j}: {len(h2.events)} events")
-                print(f"  → These histories are OBSERVATIONALLY INDISTINGUISHABLE")
+                print("  → These histories are OBSERVATIONALLY INDISTINGUISHABLE")
                 print()
     
     if not indistinguishable:
         print("All observable differences correspond to historical differences.")
         print("(Try running with more histories or longer evolution times)")
     
-    print(f"\n=== Information Loss Analysis ===\n")
+    print("\n=== Information Loss Analysis ===\n")
     
     # Analyze which events leave traces
     event_types_seen = set()
@@ -175,8 +173,8 @@ if __name__ == '__main__':
     histories, observables, indistinguishable = run_recoverability_experiment()
     
     if indistinguishable:
-        print(f"\n=== Summary ===")
+        print("\n=== Summary ===")
         print(f"Found {len(indistinguishable)} pairs of distinct histories")
-        print(f"that produced observationally similar outcomes.")
-        print(f"\nThis is the fundamental limit of historical linguistics:")
-        print(f"some historical facts are forever unknowable.")
+        print("that produced observationally similar outcomes.")
+        print("\nThis is the fundamental limit of historical linguistics:")
+        print("some historical facts are forever unknowable.")

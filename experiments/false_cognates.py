@@ -16,20 +16,17 @@ constitute weak historical evidence.
 """
 
 import sys
+
 sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
 
-from language_evolution.framework import History, Observable, InferenceSystem, Reconstruction
-from language_evolution.phonology import Phoneme, PhonemeInventory
-from typing import List, Dict, Set, Tuple
-from collections import defaultdict, Counter
 import random
-import itertools
+from collections import defaultdict
 
 
 class MiniLanguageGenerator:
     """Generate small unrelated languages for false cognate testing."""
     
-    def __init__(self, seed: int = None):
+    def __init__(self, seed: int | None = None):
         if seed is not None:
             random.seed(seed)
         
@@ -45,7 +42,7 @@ class MiniLanguageGenerator:
             'small', 'good', 'bad', 'one', 'two'
         ]
     
-    def generate_language(self, lang_id: int, lexicon_size: int = 20) -> Dict[str, str]:
+    def generate_language(self, lang_id: int, lexicon_size: int = 20) -> dict[str, str]:
         """Generate one random language.
         
         Languages are UNRELATED - no common ancestor.
@@ -80,7 +77,7 @@ class MiniLanguageGenerator:
         
         return lexicon
     
-    def generate_language_set(self, num_languages: int, lexicon_size: int = 20) -> List[Dict[str, str]]:
+    def generate_language_set(self, num_languages: int, lexicon_size: int = 20) -> list[dict[str, str]]:
         """Generate multiple unrelated languages."""
         return [
             self.generate_language(i, lexicon_size)
@@ -117,9 +114,9 @@ class CognateDetector:
     
     def find_potential_cognates(
         self,
-        languages: List[Dict[str, str]],
+        languages: list[dict[str, str]],
         require_semantics: bool = False
-    ) -> List[Tuple[int, int, str, str, str, float]]:
+    ) -> list[tuple[int, int, str, str, str, float]]:
         """Find word pairs that look similar.
         
         Returns: list of (lang1_id, lang2_id, concept, form1, form2, similarity)
@@ -152,7 +149,6 @@ class CognateDetector:
                             
                             if similarity >= self.min_similarity:
                                 # Record as potential cognate
-                                meaning_match = concept1 == concept2
                                 potential_cognates.append((
                                     i, j, f"{concept1}~{concept2}", 
                                     form1, form2, similarity
@@ -162,9 +158,9 @@ class CognateDetector:
     
     def find_systematic_correspondences(
         self,
-        languages: List[Dict[str, str]],
+        languages: list[dict[str, str]],
         min_examples: int = 3
-    ) -> Dict[Tuple[int, int], List[Tuple[str, str, int]]]:
+    ) -> dict[tuple[int, int], list[tuple[str, str, int]]]:
         """Find recurring sound correspondences between language pairs.
         
         A systematic correspondence is a phoneme pair that recurs across
@@ -222,11 +218,11 @@ def run_false_cognate_experiment():
     lexicon_size = 20
     num_trials = 10
     
-    print(f"Experimental Design:")
+    print("Experimental Design:")
     print(f"  - Generate {num_languages} completely unrelated languages")
     print(f"  - Each language has {lexicon_size} words")
     print(f"  - Run {num_trials} trials with different random seeds")
-    print(f"  - Measure false-positive rates\n")
+    print("  - Measure false-positive rates\n")
     
     # Run trials
     generator = MiniLanguageGenerator()
@@ -262,7 +258,7 @@ def run_false_cognate_experiment():
     words_per_language = lexicon_size
     total_word_pairs = total_comparisons * words_per_language * words_per_language
     
-    print(f"\nSummary:")
+    print("\nSummary:")
     print(f"  Average false positives: {avg_form_only:.1f} per trial")
     print(f"  Total word-pair comparisons: {total_word_pairs:,}")
     print(f"  False positive rate: {100 * avg_form_only / total_word_pairs:.4f}%")
@@ -286,7 +282,7 @@ def run_false_cognate_experiment():
     
     semantic_comparisons = total_comparisons * lexicon_size  # Same meaning only
     
-    print(f"\nSummary:")
+    print("\nSummary:")
     print(f"  Average false positives: {avg_semantic:.1f} per trial")
     print(f"  Semantic comparisons: {semantic_comparisons:,}")
     print(f"  False positive rate: {100 * avg_semantic / semantic_comparisons:.4f}%")
@@ -309,7 +305,7 @@ def run_false_cognate_experiment():
     
     avg_systematic = sum(results['systematic_required']) / len(results['systematic_required'])
     
-    print(f"\nSummary:")
+    print("\nSummary:")
     print(f"  Average language pairs: {avg_systematic:.1f} per trial")
     print(f"  Total language pairs: {total_comparisons}")
     print(f"  False positive rate: {100 * avg_systematic / total_comparisons:.4f}%")
@@ -339,7 +335,7 @@ def run_false_cognate_experiment():
         for lang1, lang2, concept, form1, form2, sim in matches[:5]:
             print(f"  Languages {lang1} & {lang2}, '{concept}':")
             print(f"    {form1} ≈ {form2} (similarity: {sim:.2f})")
-            print(f"    → Accidental! These languages are unrelated\n")
+            print("    → Accidental! These languages are unrelated\n")
     else:
         print("No accidental resemblances above threshold in this sample.")
     
@@ -347,7 +343,7 @@ def run_false_cognate_experiment():
     systematic = detector.find_systematic_correspondences(languages, min_examples=2)
     
     if systematic:
-        print(f"\nSystematic correspondences found (by pure chance!):\n")
+        print("\nSystematic correspondences found (by pure chance!):\n")
         for (lang1, lang2), corrs in list(systematic.items())[:2]:
             print(f"  Languages {lang1} & {lang2}:")
             for c1, c2, count in corrs[:3]:
@@ -359,19 +355,19 @@ def run_false_cognate_experiment():
     print("KEY FINDINGS")
     print("=" * 60)
     
-    print(f"\n1. Form Similarity Alone:")
+    print("\n1. Form Similarity Alone:")
     print(f"   {avg_form_only:.1f} false positives on average")
-    print(f"   → Unreliable evidence without semantic agreement")
+    print("   → Unreliable evidence without semantic agreement")
     
-    print(f"\n2. Semantic Agreement:")
+    print("\n2. Semantic Agreement:")
     print(f"   {avg_semantic:.1f} false positives on average")
     print(f"   → Reduces false positives by {100 * (1 - avg_semantic / avg_form_only):.0f}%")
-    print(f"   → But still produces accidental matches!")
+    print("   → But still produces accidental matches!")
     
-    print(f"\n3. Systematic Correspondences:")
+    print("\n3. Systematic Correspondences:")
     print(f"   {avg_systematic:.1f} language pairs on average")
-    print(f"   → Even recurring patterns can arise by chance")
-    print(f"   → Need multiple independent cognate sets")
+    print("   → Even recurring patterns can arise by chance")
+    print("   → Need multiple independent cognate sets")
     
     print("\n" + "=" * 60)
     print("IMPLICATIONS FOR HISTORICAL LINGUISTICS")
@@ -389,7 +385,7 @@ def run_false_cognate_experiment():
     print("  - Exclusion of known borrowing")
     
     print("\n**Quantified baseline:**")
-    print(f"  False positive rate (semantic + form):")
+    print("  False positive rate (semantic + form):")
     print(f"  {100 * avg_semantic / semantic_comparisons:.4f}%")
     
     print("\n" + "=" * 60)

@@ -5,16 +5,17 @@ probabilistically through speakers and generations. Models competing innovations
 incomplete adoption, geographical isolation, prestige effects, and chain shifts.
 """
 
-from dataclasses import dataclass, field
-from typing import List, Dict, Set, Tuple
 import random
-from collections import defaultdict
-
 import sys
+from dataclasses import dataclass, field
+
 sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
 
 from language_evolution.phonology import (
-    Phoneme, SoundChange, PhonemeInventory, create_basic_inventory
+    Phoneme,
+    PhonemeInventory,
+    SoundChange,
+    create_basic_inventory,
 )
 
 
@@ -23,8 +24,8 @@ class Speaker:
     """An individual speaker with their own phoneme inventory and lexicon."""
     id: int
     inventory: PhonemeInventory
-    lexicon: Dict[str, List[Phoneme]]
-    position: Tuple[float, float]  # (x, y) coordinates
+    lexicon: dict[str, list[Phoneme]]
+    position: tuple[float, float]  # (x, y) coordinates
     prestige: float = 1.0
     generation: int = 0
     
@@ -43,11 +44,11 @@ class Speaker:
 @dataclass
 class Population:
     """A population of speakers."""
-    speakers: List[Speaker]
-    sound_changes: List[SoundChange] = field(default_factory=list)
+    speakers: list[Speaker]
+    sound_changes: list[SoundChange] = field(default_factory=list)
     generation: int = 0
     
-    def get_neighbors(self, speaker: Speaker, radius: float = 1.0) -> List[Speaker]:
+    def get_neighbors(self, speaker: Speaker, radius: float = 1.0) -> list[Speaker]:
         """Get speakers within geographical radius."""
         neighbors = []
         for other in self.speakers:
@@ -89,7 +90,7 @@ class Population:
                     total_prestige += neighbor.prestige
                     # Simple heuristic: if first word changed, they adopted it
                     if neighbor.lexicon:
-                        test_word = list(neighbor.lexicon.keys())[0]
+                        test_word = next(iter(neighbor.lexicon.keys()))
                         original = create_test_lexicon()[test_word]
                         if neighbor.lexicon[test_word] != original:
                             adopter_count += neighbor.prestige
@@ -103,15 +104,15 @@ class Population:
                         for word in speaker.lexicon:
                             speaker.lexicon[word] = change.apply(speaker.lexicon[word])
     
-    def compute_phoneme_divergence(self) -> Dict[Tuple[int, int], float]:
+    def compute_phoneme_divergence(self) -> dict[tuple[int, int], float]:
         """Compute phoneme inventory divergence between all speaker pairs."""
         divergences = {}
         
         for i, speaker1 in enumerate(self.speakers):
             for j, speaker2 in enumerate(self.speakers[i+1:], start=i+1):
                 # Compute symmetric difference of inventories
-                inv1 = set(p.symbol for p in speaker1.inventory.phonemes)
-                inv2 = set(p.symbol for p in speaker2.inventory.phonemes)
+                inv1 = {p.symbol for p in speaker1.inventory.phonemes}
+                inv2 = {p.symbol for p in speaker2.inventory.phonemes}
                 
                 symmetric_diff = len(inv1.symmetric_difference(inv2))
                 union_size = len(inv1.union(inv2))
@@ -121,7 +122,7 @@ class Population:
         
         return divergences
     
-    def compute_lexical_divergence(self) -> Dict[Tuple[int, int], float]:
+    def compute_lexical_divergence(self) -> dict[tuple[int, int], float]:
         """Compute lexical divergence between all speaker pairs."""
         divergences = {}
         
@@ -143,7 +144,7 @@ class Population:
         return divergences
 
 
-def create_test_lexicon() -> Dict[str, List[Phoneme]]:
+def create_test_lexicon() -> dict[str, list[Phoneme]]:
     """Create a small test lexicon."""
     inv = create_basic_inventory()
     
@@ -243,7 +244,7 @@ def run_simulation(generations: int = 10, population_size: int = 20):
     avg_div = sum(lex_div.values()) / len(lex_div) if lex_div else 0
     max_div = max(lex_div.values()) if lex_div else 0
     
-    print(f"\nFinal statistics:")
+    print("\nFinal statistics:")
     print(f"  Average lexical divergence: {avg_div:.3f}")
     print(f"  Maximum lexical divergence: {max_div:.3f}")
     print(f"  Number of sound changes: {len(pop.sound_changes)}")

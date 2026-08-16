@@ -14,20 +14,19 @@ Research Questions:
 """
 
 import sys
+
 sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
 
-from language_evolution.framework import History, Observable, HistoryGenerator
-from language_evolution.phonology import create_basic_inventory
-from typing import Dict, List, Set, Tuple
-from collections import defaultdict, Counter
 import random
-import math
+from collections import Counter, defaultdict
+
+from language_evolution.framework import HistoryGenerator, Observable
 
 
 class ContactLanguage:
     """A language that can borrow from neighbors."""
     
-    def __init__(self, lang_id: int, parent_id: int = None):
+    def __init__(self, lang_id: int, parent_id: int | None = None):
         self.id = lang_id
         self.parent_id = parent_id  # True genetic parent (ground truth)
         
@@ -35,10 +34,10 @@ class ContactLanguage:
         self.lexicon = self._generate_lexicon(lang_id)
         
         # Track borrowings
-        self.borrowed_words: Dict[str, int] = {}  # word -> source_lang_id
+        self.borrowed_words: dict[str, int] = {}  # word -> source_lang_id
         self.borrowing_rate = 0.0
     
-    def _generate_lexicon(self, seed: int) -> Dict[str, str]:
+    def _generate_lexicon(self, seed: int) -> dict[str, str]:
         """Generate unique lexicon for this language."""
         random.seed(seed * 1000)  # Ensure different languages get different lexicons
         
@@ -85,8 +84,8 @@ class ContactSimulator(HistoryGenerator):
         self.langs_per_family = langs_per_family
         
         # Create language families (true genetic relationships)
-        self.languages: List[ContactLanguage] = []
-        self.family_membership: Dict[int, int] = {}  # lang_id -> family_id
+        self.languages: list[ContactLanguage] = []
+        self.family_membership: dict[int, int] = {}  # lang_id -> family_id
         
         lang_id = 0
         for family_id in range(num_families):
@@ -147,7 +146,6 @@ class ContactSimulator(HistoryGenerator):
     
     def step(self, time: int):
         """Simulate one time step (not used in current simplified version)."""
-        pass
     
     def get_observable(self, time: int) -> Observable:
         """Extract observable - just current lexicons, not borrowing history."""
@@ -168,7 +166,7 @@ class ContactSimulator(HistoryGenerator):
 class NaiveTreeBuilder:
     """Build family tree from lexical similarity (ignoring borrowing)."""
     
-    def lexical_similarity(self, lex1: Dict[str, str], lex2: Dict[str, str]) -> float:
+    def lexical_similarity(self, lex1: dict[str, str], lex2: dict[str, str]) -> float:
         """Calculate lexical similarity between two languages."""
         common_concepts = set(lex1.keys()) & set(lex2.keys())
         if not common_concepts:
@@ -177,7 +175,7 @@ class NaiveTreeBuilder:
         matches = sum(1 for concept in common_concepts if lex1[concept] == lex2[concept])
         return matches / len(common_concepts)
     
-    def build_tree(self, observable: Observable) -> Dict[str, any]:
+    def build_tree(self, observable: Observable) -> dict[str, any]:
         """Build tree using lexical similarity (UPGMA-like)."""
         languages = observable.languages
         lang_ids = list(languages.keys())
@@ -234,11 +232,10 @@ class NaiveTreeBuilder:
         }
 
 
-def compare_trees(true_families: Dict[int, int], inferred_families: Dict[int, int]) -> Dict[str, float]:
+def compare_trees(true_families: dict[int, int], inferred_families: dict[int, int]) -> dict[str, float]:
     """Compare true vs inferred family structure."""
     
-    total = len(true_families)
-    correct = 0
+    len(true_families)
     
     # For each pair of languages, check if grouping is correct
     lang_ids = list(true_families.keys())
@@ -381,8 +378,8 @@ def run_borrowing_experiment():
     
     print(f"\nShared vocabulary: {shared}/{len(lang1.lexicon)} ({100*shared/len(lang1.lexicon):.1f}%)")
     print(f"Due to borrowing: {borrowed_shared} words")
-    print(f"\nA naïve tree builder would infer these are closely related")
-    print(f"But ground truth shows they're from different families!")
+    print("\nA naïve tree builder would infer these are closely related")
+    print("But ground truth shows they're from different families!")
     
     # Show some borrowed words
     print("\nExamples of borrowed words:")
@@ -398,15 +395,15 @@ def run_borrowing_experiment():
     print("=" * 60)
     
     print("\n1. No Contact:")
-    print(f"   Tree reconstruction works perfectly (baseline)")
+    print("   Tree reconstruction works perfectly (baseline)")
     
     print("\n2. Light Contact (10-20% borrowing):")
-    print(f"   Reconstruction still mostly accurate")
-    print(f"   But some pairs are misclassified")
+    print("   Reconstruction still mostly accurate")
+    print("   But some pairs are misclassified")
     
     print("\n3. Heavy Contact (30-40% borrowing):")
-    print(f"   Tree reconstruction significantly degraded")
-    print(f"   Languages from different families grouped together")
+    print("   Tree reconstruction significantly degraded")
+    print("   Languages from different families grouped together")
     
     print("\n" + "=" * 60)
     print("IMPLICATIONS")

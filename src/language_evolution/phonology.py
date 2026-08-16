@@ -1,15 +1,14 @@
 """Phonological representation and sound change."""
 
-from dataclasses import dataclass, field
-from typing import Set, Dict, List, Tuple
 import random
+from dataclasses import dataclass, field
 
 
 @dataclass
 class Phoneme:
     """A phoneme with distinctive features."""
     symbol: str
-    features: Set[str]
+    features: set[str]
     
     def __hash__(self):
         return hash(self.symbol)
@@ -24,8 +23,8 @@ class SoundChange:
     name: str
     source: Phoneme
     target: Phoneme
-    context_before: Set[Phoneme] = field(default_factory=set)
-    context_after: Set[Phoneme] = field(default_factory=set)
+    context_before: set[Phoneme] = field(default_factory=set)
+    context_after: set[Phoneme] = field(default_factory=set)
     probability: float = 1.0
     
     def applies(self, phoneme: Phoneme, before: Phoneme | None, after: Phoneme | None) -> bool:
@@ -41,7 +40,7 @@ class SoundChange:
         
         return random.random() < self.probability
     
-    def apply(self, word: List[Phoneme]) -> List[Phoneme]:
+    def apply(self, word: list[Phoneme]) -> list[Phoneme]:
         """Apply this sound change to a word."""
         result = []
         for i, phoneme in enumerate(word):
@@ -59,7 +58,7 @@ class SoundChange:
 class PhonemeInventory:
     """A language's phoneme inventory."""
     
-    def __init__(self, phonemes: Set[Phoneme]):
+    def __init__(self, phonemes: set[Phoneme]):
         self.phonemes = phonemes
         self._symbol_map = {p.symbol: p for p in phonemes}
     

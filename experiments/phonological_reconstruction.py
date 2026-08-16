@@ -11,17 +11,15 @@ Research Question:
 """
 
 import sys
+
 sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
-
-from language_evolution.framework import compare_histories, RecoverabilityAnalysis
-from language_evolution.phonology import Phoneme, SoundChange, create_basic_inventory
-from typing import Dict, List, Set
-from collections import defaultdict, Counter
-import random
-
 
 # Import from existing experiments
 import importlib.util
+import random
+from collections import Counter, defaultdict
+
+from language_evolution.phonology import Phoneme, SoundChange, create_basic_inventory
 
 # Load phonological_drift module
 spec = importlib.util.spec_from_file_location(
@@ -50,7 +48,7 @@ class PopulationBasedReconstructor:
         self.reconstructed_forms = {}
         self.confidence_scores = {}
     
-    def reconstruct_from_population(self, observable) -> Dict[str, str]:
+    def reconstruct_from_population(self, observable) -> dict[str, str]:
         """Reconstruct proto-forms from population snapshot."""
         
         # Extract all attested forms per word
@@ -83,8 +81,8 @@ class PopulationBasedReconstructor:
     def _reconstruct_word(
         self, 
         word: str, 
-        forms: List[tuple],
-        positions: Dict
+        forms: list[tuple],
+        positions: dict
     ) -> str:
         """Reconstruct a single word.
         
@@ -116,8 +114,8 @@ class PopulationBasedReconstructor:
     def _calculate_confidence(
         self,
         word: str,
-        forms: List[tuple],
-        positions: Dict
+        forms: list[tuple],
+        positions: dict
     ) -> float:
         """Calculate reconstruction confidence."""
         
@@ -337,15 +335,15 @@ def run_vertical_slice_experiment():
     
     print("\n**Information Lost:**")
     print(f"  - {len(population.speakers) - len(sample_speakers)} speaker lineages not documented")
-    print(f"  - Sound change ordering and timing unknown")
-    print(f"  - Intermediate forms lost")
-    print(f"  - Prestige and geographic effects not directly observable")
+    print("  - Sound change ordering and timing unknown")
+    print("  - Intermediate forms lost")
+    print("  - Prestige and geographic effects not directly observable")
     
     print("\n**Reconstruction Challenges:**")
     
     # Find words with high variation
     high_variation_words = []
-    for word in reconstructed_forms.keys():
+    for word in reconstructed_forms:
         forms = set()
         for lang_data in observable_languages.values():
             if word in lang_data['lexicon']:
@@ -366,9 +364,9 @@ def run_vertical_slice_experiment():
     print("\n**Key Insight:**")
     print(f"  Even with {len(sample_speakers)} daughter languages and systematic method,")
     print(f"  only {correct}/{total} exact reconstructions achieved.")
-    print(f"  This reflects both:")
-    print(f"    (a) Limitations of simple majority-rule reconstruction")
-    print(f"    (b) Genuine information loss in O_t")
+    print("  This reflects both:")
+    print("    (a) Limitations of simple majority-rule reconstruction")
+    print("    (b) Genuine information loss in O_t")
     
     print("\n" + "=" * 60)
     print("EXPERIMENT COMPLETE")

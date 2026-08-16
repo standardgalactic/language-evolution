@@ -7,13 +7,14 @@ among constraints, not from a single "fitness" score.
 """
 
 import sys
+
 sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
 
-from language_evolution.framework import History, Observable, HistoryGenerator
-from dataclasses import dataclass
-from typing import List, Dict, Set
-import random
 import math
+import random
+from dataclasses import dataclass
+
+from language_evolution.framework import HistoryGenerator, Observable
 
 
 @dataclass
@@ -36,9 +37,9 @@ class WordVariant:
 class Meaning:
     """A meaning that can be expressed by competing variants."""
     concept: str
-    variants: List[WordVariant]
+    variants: list[WordVariant]
     
-    def get_variant_probabilities(self, context: str = 'neutral') -> List[float]:
+    def get_variant_probabilities(self, context: str = 'neutral') -> list[float]:
         """Calculate selection probabilities based on multiple constraints."""
         if not self.variants:
             return []
@@ -92,7 +93,7 @@ class Meaning:
 class LexicalSelectionSimulator(HistoryGenerator):
     """Simulates lexical competition and survival."""
     
-    def __init__(self, meanings: List[Meaning]):
+    def __init__(self, meanings: list[Meaning]):
         super().__init__()
         self.meanings = {m.concept: m for m in meanings}
         
@@ -182,7 +183,7 @@ class LexicalSelectionSimulator(HistoryGenerator):
         )
 
 
-def create_test_lexicon() -> List[Meaning]:
+def create_test_lexicon() -> list[Meaning]:
     """Create a lexicon with competing variants."""
     meanings = []
     
@@ -249,7 +250,7 @@ def run_simulation(steps: int = 100):
     print(f"\nRunning {steps} time steps of communicative selection...\n")
     
     # Run simulation
-    history, observable = sim.run(steps)
+    history, _observable = sim.run(steps)
     
     print(f"=== After {steps} Time Steps ===\n")
     
@@ -257,7 +258,7 @@ def run_simulation(steps: int = 100):
     for concept, meaning in sorted(sim.meanings.items()):
         print(f"{concept}:")
         if not meaning.variants:
-            print(f"  (all variants extinct!)")
+            print("  (all variants extinct!)")
             continue
         
         total = sum(v.frequency for v in meaning.variants)
@@ -268,7 +269,7 @@ def run_simulation(steps: int = 100):
             print(f"  - {variant.form}: {variant.frequency} uses ({proportion*100:.1f}%)")
         
         if len(meaning.variants) < len(history.metadata['initial_variants'][concept]):
-            extinct = set(history.metadata['initial_variants'][concept]) - set(v.form for v in meaning.variants)
+            extinct = set(history.metadata['initial_variants'][concept]) - {v.form for v in meaning.variants}
             print(f"    Extinct: {', '.join(extinct)}")
         print()
     
@@ -283,7 +284,7 @@ def run_simulation(steps: int = 100):
             prop = event.data['proportion']
             print(f"  t={event.time}: '{variant}' ({concept}) went extinct at {freq} uses ({prop*100:.1f}%)")
     
-    print(f"\n=== Recoverability Analysis ===\n")
+    print("\n=== Recoverability Analysis ===\n")
     print("From observable O_t, we see:")
     print("  - Which variants currently exist")
     print("  - Their relative frequencies")

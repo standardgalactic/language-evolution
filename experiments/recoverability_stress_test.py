@@ -11,15 +11,16 @@ Research Questions:
 """
 
 import sys
-sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
 
-from language_evolution.framework import Observable, RecoverabilityAnalysis
-from language_evolution.phonology import Phoneme, SoundChange, create_basic_inventory
-import random
-from collections import defaultdict, Counter
+sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
 
 # Import phonological drift
 import importlib.util
+import random
+from collections import Counter
+
+from language_evolution.phonology import Phoneme, SoundChange, create_basic_inventory
+
 spec = importlib.util.spec_from_file_location(
     "phonological_drift",
     "/home/bonobo/github/language-evolution/experiments/phonological_drift.py"
@@ -301,22 +302,22 @@ def run_recoverability_stress_test():
     print("KEY FINDINGS")
     print("=" * 60)
     
-    print(f"\n1. Reconstruction Variation:")
+    print("\n1. Reconstruction Variation:")
     print(f"   Different evolutionary paths yield {min(t['accuracy']['exact'] for t in trials)} to "
           f"{max(t['accuracy']['exact'] for t in trials)} exact matches")
     print(f"   Average accuracy: {avg_accuracy:.1f}%")
     
-    print(f"\n2. Observational Indistinguishability:")
+    print("\n2. Observational Indistinguishability:")
     if indist:
         print(f"   Found {len(indist)} history pairs with >80% observable similarity")
-        print(f"   These represent genuinely unrecoverable distinctions")
+        print("   These represent genuinely unrecoverable distinctions")
     else:
-        print(f"   No strong indistinguishability found in this sample")
-        print(f"   (May require more trials or different parameters)")
+        print("   No strong indistinguishability found in this sample")
+        print("   (May require more trials or different parameters)")
     
-    print(f"\n3. Evidence Sparsity:")
-    print(f"   Accuracy decreases as observation becomes sparser")
-    print(f"   Even with systematic method, some information is permanently lost")
+    print("\n3. Evidence Sparsity:")
+    print("   Accuracy decreases as observation becomes sparser")
+    print("   Even with systematic method, some information is permanently lost")
     
     print("\n" + "=" * 60)
     

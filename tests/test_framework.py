@@ -1,18 +1,23 @@
 """Tests for the framework and experiments."""
 
 import sys
+
 sys.path.insert(0, 'src')
 
 from language_evolution.framework import (
-    History, Observable, Reconstruction, HistoryGenerator,
-    InferenceSystem, compare_histories, measure_observable_distance
+    History,
+    Observable,
+    Reconstruction,
+    compare_histories,
+    measure_observable_distance,
 )
 from language_evolution.phonology import (
-    Phoneme, SoundChange, PhonemeInventory, create_basic_inventory
+    Phoneme,
+    PhonemeInventory,
+    SoundChange,
+    create_basic_inventory,
 )
-from language_evolution.semantics import (
-    SemanticVector, SemanticRegion, SemanticSpace, create_basic_semantic_space
-)
+from language_evolution.semantics import SemanticRegion, SemanticVector, create_basic_semantic_space
 
 
 class TestFramework:
@@ -215,7 +220,7 @@ def run_all_tests():
             except AssertionError as e:
                 print(f"  ✗ {method_name}: {e}")
                 failed += 1
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001 - test runner needs to catch all test exceptions
                 print(f"  ✗ {method_name}: {type(e).__name__}: {e}")
                 failed += 1
         

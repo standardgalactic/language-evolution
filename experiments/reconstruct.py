@@ -7,18 +7,19 @@ succeeds and where information is unrecoverable.
 """
 
 import sys
+
 sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
 
-from language_evolution.framework import (
-    History, Observable, HistoryGenerator, Reconstruction, 
-    InferenceSystem, compare_histories
-)
-from language_evolution.phonology import (
-    Phoneme, SoundChange, PhonemeInventory, create_basic_inventory
-)
-from typing import Dict, List, Tuple, Set
-from collections import defaultdict
 import random
+from collections import defaultdict
+
+from language_evolution.framework import (
+    HistoryGenerator,
+    InferenceSystem,
+    Observable,
+    Reconstruction,
+)
+from language_evolution.phonology import Phoneme, SoundChange, create_basic_inventory
 
 
 class ProtoLanguageGenerator(HistoryGenerator):
@@ -49,7 +50,7 @@ class ProtoLanguageGenerator(HistoryGenerator):
             for word, phones in self.proto_lexicon.items()
         }
     
-    def _create_proto_lexicon(self) -> Dict[str, List[Phoneme]]:
+    def _create_proto_lexicon(self) -> dict[str, list[Phoneme]]:
         """Create proto-language lexicon."""
         lexicon = {}
         
@@ -68,7 +69,7 @@ class ProtoLanguageGenerator(HistoryGenerator):
         
         return lexicon
     
-    def _get_sound_changes_for_daughter(self, daughter_id: int) -> List[SoundChange]:
+    def _get_sound_changes_for_daughter(self, daughter_id: int) -> list[SoundChange]:
         """Generate sound changes specific to a daughter language."""
         inv = self.proto_inventory
         changes = []
@@ -163,7 +164,7 @@ class ComparativeMethodReconstructor(InferenceSystem):
         daughters = observable.languages
         
         # Find cognate sets (words that appear in multiple daughters)
-        word_forms: Dict[str, Dict[int, str]] = defaultdict(dict)
+        word_forms: dict[str, dict[int, str]] = defaultdict(dict)
         
         # Collect forms for each word across daughters
         for lang_id, lexicon in daughters.items():
@@ -193,7 +194,7 @@ class ComparativeMethodReconstructor(InferenceSystem):
         
         return reconstruction
     
-    def _reconstruct_word(self, word: str, forms: Dict[int, str]) -> str:
+    def _reconstruct_word(self, word: str, forms: dict[int, str]) -> str:
         """Reconstruct a proto-form from attested forms."""
         # Simplified reconstruction: majority rule per position
         
@@ -221,7 +222,7 @@ class ComparativeMethodReconstructor(InferenceSystem):
         
         return ''.join(reconstructed)
     
-    def _calculate_confidence(self, word: str, forms: Dict[int, str], proto_form: str) -> float:
+    def _calculate_confidence(self, word: str, forms: dict[int, str], proto_form: str) -> float:
         """Calculate confidence in reconstruction."""
         # Confidence based on:
         # 1. Number of witnesses
@@ -273,17 +274,17 @@ def run_experiment():
         print(f"  *{word} = {form}")
     
     # Evolve for some time
-    history, observable = generator.run(num_steps=20)
+    _history, observable = generator.run(num_steps=20)
     
-    print(f"\nStep 2: After 20 time steps of independent evolution...")
-    print(f"Daughter languages (observable evidence):")
+    print("\nStep 2: After 20 time steps of independent evolution...")
+    print("Daughter languages (observable evidence):")
     for lang_id, lexicon in sorted(observable.languages.items()):
         print(f"\n  Daughter {lang_id}:")
         for word, form in sorted(lexicon.items())[:5]:
             print(f"    {word} = {form}")
     
     # Now reconstruct
-    print(f"\n\nStep 3: Attempting reconstruction from daughters only...\n")
+    print("\n\nStep 3: Attempting reconstruction from daughters only...\n")
     
     reconstructor = ComparativeMethodReconstructor()
     reconstruction = reconstructor.reconstruct(observable)
@@ -316,14 +317,14 @@ def run_experiment():
         print(f"    True form:     *{true_form}")
         print(f"    {status}\n")
     
-    print(f"=== Reconstruction Accuracy ===\n")
+    print("=== Reconstruction Accuracy ===\n")
     total = correct + partial + incorrect
     if total > 0:
         print(f"  Correct: {correct}/{total} ({100*correct/total:.1f}%)")
         print(f"  Partial: {partial}/{total} ({100*partial/total:.1f}%)")
         print(f"  Wrong:   {incorrect}/{total} ({100*incorrect/total:.1f}%)")
     
-    print(f"\n=== Recoverability Insights ===\n")
+    print("\n=== Recoverability Insights ===\n")
     print("Information we HAVE (from daughters):")
     print("  - Current forms in each daughter")
     print("  - Systematic sound correspondences")
@@ -336,7 +337,7 @@ def run_experiment():
     print()
     print("This experiment quantifies the limits of the comparative method:")
     print(f"  Even with perfect methodology, {incorrect}/{total} reconstructions were wrong")
-    print(f"  because the required information no longer exists in the signal.")
+    print("  because the required information no longer exists in the signal.")
 
 
 if __name__ == '__main__':

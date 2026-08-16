@@ -7,13 +7,14 @@ grammaticalization without encoding those categories as outcomes.
 """
 
 import sys
+
 sys.path.insert(0, '/home/bonobo/github/language-evolution/src')
 
-from language_evolution.semantics import SemanticSpace, SemanticVector, create_basic_semantic_space
-from language_evolution.framework import History, Observable, HistoryGenerator
-from typing import Dict, List, Tuple, Set
 import random
 from collections import defaultdict
+
+from language_evolution.framework import HistoryGenerator, Observable
+from language_evolution.semantics import SemanticSpace, SemanticVector, create_basic_semantic_space
 
 
 class SemanticDriftSimulator(HistoryGenerator):
@@ -22,8 +23,8 @@ class SemanticDriftSimulator(HistoryGenerator):
     def __init__(self, space: SemanticSpace):
         super().__init__()
         self.space = space
-        self.usage_contexts: Dict[str, List[SemanticVector]] = defaultdict(list)
-        self.total_usage: Dict[str, int] = defaultdict(int)
+        self.usage_contexts: dict[str, list[SemanticVector]] = defaultdict(list)
+        self.total_usage: dict[str, int] = defaultdict(int)
         
         # Record initial state
         self.history.metadata['initial_space'] = {
@@ -85,7 +86,7 @@ class SemanticDriftSimulator(HistoryGenerator):
                 )
         
         # Occasional broadening or narrowing based on usage patterns
-        for word in self.space.regions.keys():
+        for word in self.space.regions:
             if word not in self.usage_contexts or not self.usage_contexts[word]:
                 continue
             
@@ -147,13 +148,13 @@ class SemanticDriftSimulator(HistoryGenerator):
             metadata={'num_words': len(self.space.regions)}
         )
     
-    def classify_change(self, word: str) -> List[str]:
+    def classify_change(self, word: str) -> list[str]:
         """Classify what kind of semantic change occurred (post-hoc analysis)."""
         
         if word not in self.history.metadata['initial_space']:
             return []
         
-        old_center_tuple, old_radius, old_label = self.history.metadata['initial_space'][word]
+        old_center_tuple, old_radius, _old_label = self.history.metadata['initial_space'][word]
         new_region = self.space.regions[word]
         new_center = new_region.center
         new_radius = new_region.radius
@@ -193,7 +194,6 @@ class SemanticDriftSimulator(HistoryGenerator):
                     changes.append('PEJORATION')
         
         # Check for increased overlap (metaphorical extension)
-        initial_overlaps = set()
         current_overlaps = set()
         
         for other_word, other_region in self.space.regions.items():
@@ -230,7 +230,7 @@ def run_simulation(steps: int = 50):
     print(f"\nRunning {steps} time steps of usage-driven drift...\n")
     
     # Run simulation
-    history, observable = sim.run(steps)
+    history, _observable = sim.run(steps)
     
     print(f"=== After {steps} Time Steps ===\n")
     
@@ -245,7 +245,7 @@ def run_simulation(steps: int = 50):
     for word in sorted(space.regions.keys()):
         change_types = sim.classify_change(word)
         
-        old_center_tuple, old_radius, old_label = history.metadata['initial_space'][word]
+        old_center_tuple, old_radius, _old_label = history.metadata['initial_space'][word]
         new_center = space.regions[word].center
         new_radius = space.regions[word].radius
         
@@ -283,14 +283,14 @@ def run_simulation(steps: int = 50):
     print("\n=== Recoverability Analysis ===\n")
     
     print("From observable O_t (current state), we can see:")
-    print(f"  - Current word meanings (centers and radii)")
-    print(f"  - Current semantic overlaps")
+    print("  - Current word meanings (centers and radii)")
+    print("  - Current semantic overlaps")
     print()
     print("What we CANNOT recover from O_t:")
-    print(f"  - Order of changes (did narrowing precede drift, or vice versa?)")
-    print(f"  - Number of usage events that caused each shift")
-    print(f"  - Intermediate semantic states")
-    print(f"  - Whether change was gradual or had accelerations/reversals")
+    print("  - Order of changes (did narrowing precede drift, or vice versa?)")
+    print("  - Number of usage events that caused each shift")
+    print("  - Intermediate semantic states")
+    print("  - Whether change was gradual or had accelerations/reversals")
     print()
     print("Example: Two words could reach the same final meaning via:")
     print("  H₁: steady drift in one direction")

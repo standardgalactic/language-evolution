@@ -7,12 +7,10 @@ This module defines the fundamental architecture:
 - Recoverability: Measuring which historical distinctions remain inferable
 """
 
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Set, Tuple, Optional, Generic, TypeVar
-from abc import ABC, abstractmethod
-from collections import defaultdict
 import json
-
+from abc import ABC, abstractmethod
+from dataclasses import dataclass, field
+from typing import Any, TypeVar
 
 T = TypeVar('T')
 
@@ -22,8 +20,8 @@ class HistoricalEvent:
     """A single event in the evolution history."""
     time: int
     event_type: str
-    agent_id: Optional[int]
-    data: Dict[str, Any]
+    agent_id: int | None
+    data: dict[str, Any]
     
     def __repr__(self):
         return f"t={self.time} {self.event_type} agent={self.agent_id}"
@@ -37,23 +35,23 @@ class History:
     """
     
     def __init__(self):
-        self.events: List[HistoricalEvent] = []
-        self.metadata: Dict[str, Any] = {}
+        self.events: list[HistoricalEvent] = []
+        self.metadata: dict[str, Any] = {}
     
-    def record(self, time: int, event_type: str, agent_id: Optional[int] = None, **data):
+    def record(self, time: int, event_type: str, agent_id: int | None = None, **data):
         """Record a historical event."""
         event = HistoricalEvent(time, event_type, agent_id, data)
         self.events.append(event)
     
-    def get_events_by_type(self, event_type: str) -> List[HistoricalEvent]:
+    def get_events_by_type(self, event_type: str) -> list[HistoricalEvent]:
         """Get all events of a specific type."""
         return [e for e in self.events if e.event_type == event_type]
     
-    def get_events_at_time(self, time: int) -> List[HistoricalEvent]:
+    def get_events_at_time(self, time: int) -> list[HistoricalEvent]:
         """Get all events at a specific time."""
         return [e for e in self.events if e.time == time]
     
-    def get_events_for_agent(self, agent_id: int) -> List[HistoricalEvent]:
+    def get_events_for_agent(self, agent_id: int) -> list[HistoricalEvent]:
         """Get all events involving a specific agent."""
         return [e for e in self.events if e.agent_id == agent_id]
     
@@ -89,8 +87,8 @@ class Observable:
     been lost.
     """
     time: int
-    languages: Dict[int, Any]  # agent_id -> language state
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    languages: dict[int, Any]  # agent_id -> language state
+    metadata: dict[str, Any] = field(default_factory=dict)
     
     def __repr__(self):
         return f"Observable(t={self.time}, {len(self.languages)} languages)"
@@ -105,14 +103,12 @@ class HistoryGenerator(ABC):
     @abstractmethod
     def step(self, time: int):
         """Simulate one time step, recording all events to history."""
-        pass
     
     @abstractmethod
     def get_observable(self, time: int) -> Observable:
         """Extract observable evidence at time t, hiding internal history."""
-        pass
     
-    def run(self, num_steps: int) -> Tuple[History, Observable]:
+    def run(self, num_steps: int) -> tuple[History, Observable]:
         """Run simulation and return both H and O_t."""
         for t in range(num_steps):
             self.step(t)
@@ -128,12 +124,12 @@ class Reconstruction:
     """
     
     def __init__(self):
-        self.inferred_events: List[HistoricalEvent] = []
-        self.confidence: Dict[int, float] = {}  # event_index -> confidence
+        self.inferred_events: list[HistoricalEvent] = []
+        self.confidence: dict[int, float] = {}  # event_index -> confidence
         self.method: str = "unknown"
     
     def add_inference(self, time: int, event_type: str, confidence: float = 1.0, 
-                     agent_id: Optional[int] = None, **data):
+                     agent_id: int | None = None, **data):
         """Add an inferred historical event."""
         event = HistoricalEvent(time, event_type, agent_id, data)
         idx = len(self.inferred_events)
@@ -153,7 +149,6 @@ class InferenceSystem(ABC):
     @abstractmethod
     def reconstruct(self, observable: Observable) -> Reconstruction:
         """Infer history from observable evidence."""
-        pass
 
 
 @dataclass
@@ -166,7 +161,7 @@ class ComparisonMetrics:
     false_negatives: int = 0  # Missed events
     
     # Temporal accuracy
-    temporal_error: List[int] = field(default_factory=list)  # Time mismatches
+    temporal_error: list[int] = field(default_factory=list)  # Time mismatches
     
     # Type accuracy
     type_matches: int = 0
@@ -258,14 +253,14 @@ class RecoverabilityAnalysis:
     """
     
     # Pairs of distinct histories that produce similar observables
-    indistinguishable_pairs: List[Tuple[History, History, float]] = field(default_factory=list)
+    indistinguishable_pairs: list[tuple[History, History, float]] = field(default_factory=list)
     
     # Events that leave vs don't leave traces
-    recoverable_event_types: Set[str] = field(default_factory=set)
-    unrecoverable_event_types: Set[str] = field(default_factory=set)
+    recoverable_event_types: set[str] = field(default_factory=set)
+    unrecoverable_event_types: set[str] = field(default_factory=set)
     
     # Information bottlenecks
-    information_loss_points: List[Tuple[int, str]] = field(default_factory=list)  # (time, reason)
+    information_loss_points: list[tuple[int, str]] = field(default_factory=list)  # (time, reason)
     
     def add_indistinguishable_pair(self, h1: History, h2: History, similarity: float):
         """Record two histories with similar observables."""
@@ -315,8 +310,8 @@ def measure_observable_distance(obs1: Observable, obs2: Observable) -> float:
 
 
 def find_unrecoverable_distinctions(
-    histories: List[History],
-    observables: List[Observable],
+    histories: list[History],
+    observables: list[Observable],
     threshold: float = 0.1
 ) -> RecoverabilityAnalysis:
     """Find pairs of histories that are observationally similar.
@@ -370,12 +365,12 @@ if __name__ == '__main__':
     
     # Compare
     metrics = compare_histories(history, reconstruction, time_tolerance=2)
-    print(f"\nComparison metrics:")
+    print("\nComparison metrics:")
     print(f"  {metrics}")
     print(f"  True positives: {metrics.true_positives}")
     print(f"  False positives: {metrics.false_positives}")
     print(f"  False negatives: {metrics.false_negatives}")
-    print(f"\nInterpretation:")
+    print("\nInterpretation:")
     print(f"  - Reconstruction correctly identified {metrics.true_positives} sound changes")
     print(f"  - Missed {metrics.false_negatives} events (borrowing is often unrecoverable)")
     print(f"  - Average timing error: {metrics.avg_temporal_error:.1f} time steps")
